@@ -6,8 +6,10 @@ public class Grid : MonoBehaviour
 {
     [SerializeField] private GameObject plotPrefab;
     [SerializeField] private Transform terrain;
-    [SerializeField] private int diameter;
+    [SerializeField] private int radius;
     [SerializeField] private int size;
+
+    private int diameter { get { return radius * 2 + 1; } }
 
     private Plot[] plots;
 
@@ -16,23 +18,31 @@ public class Grid : MonoBehaviour
     {
         plots = new Plot[diameter * diameter * diameter];
 
-        for (int x = -diameter / 2; x < diameter / 2; x++)
+
+
+        for (int x = 0; x < diameter; x++)
         {
-            for (int y = -diameter / 2; y < diameter / 2; y++)
+            for (int y = 0; y < diameter; y++)
             {
-                for (int z = -diameter / 2; z < diameter / 2; z++)
+                for (int z = 0; z < diameter; z++)
                 {
-                    if ((x + y + z + 1) == 0)
+                    int xx = x - radius;
+                    int yy = y - radius;
+                    int zz = z - radius;
+                    int xyz = xx + yy + zz;
+
+                    if (xyz == 0)
                     {
+                        float xxx = xx * ((xx % 2 == 0) ? 1 : 1.5f);
+                        float zzz = zz * ((zz % 2 == 0) ? 1 : 1.5f);
                         GameObject obj = Instantiate(plotPrefab);
                         obj.transform.parent = terrain;
-                        obj.transform.position = new Vector3(x * Mathf.Sqrt(2) ,0, z * Mathf.Sqrt(2));
-                        obj.transform.rotation = Quaternion.Euler(45, 45, 45);
+                        obj.transform.localPosition = new Vector3(xx, yy, zz);
                     }
-                    // plots[x + (y * radius) + (z * radius * radius)] = obj.GetComponent<Plot>();
                 }
             }
         }
+
     }
 
 
@@ -49,7 +59,8 @@ public class Grid : MonoBehaviour
         return new Vector2(x, y);
     }
 
-    public Vector3 AxialToCube(Vector2 hex) {
+    public Vector3 AxialToCube(Vector2 hex)
+    {
         var x = hex.x;
         var y = hex.y;
         var z = -x - y;
