@@ -157,7 +157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plotPrefab: {fileID: 1858701088794844, guid: 1171559e7c4a2284f89df27e11295d9e, type: 2}
   terrain: {fileID: 1842225309}
-  diameter: 10
+  diameter: 5
   size: 1
 --- !u!1 &1584084741
 GameObject:
