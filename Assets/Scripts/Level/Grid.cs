@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Level;
+using Assets.Scripts.Utils;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ public class Grid : MonoBehaviour
     [SerializeField] private Transform terrain;
     [SerializeField] private int radius;
     [SerializeField] private float size;
+    [SerializeField] private float heightAmplifier;
 
     private int Diameter { get { return radius * 2 + 1; } }
 
@@ -18,7 +20,8 @@ public class Grid : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        Generate();
+        float seed = (float)NoiseMapGenerator.Random.NextDouble();
+        Generate(seed);
     }
 
     // Update is called once per frame
@@ -27,14 +30,15 @@ public class Grid : MonoBehaviour
 
     }
 
-    private void Generate()
+    private void Generate(float seed)
     {
-        GenerateTerrain();
+        GenerateTerrain( seed);
     }
 
-    private void GenerateTerrain()
+    private void GenerateTerrain(float seed)
     {
         GeneratePlots();
+        GenerateHills(seed);
     }
 
     private void GeneratePlots()
@@ -70,6 +74,18 @@ public class Grid : MonoBehaviour
         }
     }
 
+    private void GenerateHills(float seed)
+    {
+        float[] map = NoiseMapGenerator.GeneratePerlinNoice(Diameter, Diameter,(float) seed);
+
+        foreach (Plot plot in plots)
+        {
+            int pos = (plot.Location.Q + radius) + (plot.Location.R + radius) * Diameter;
+            float height =  (map[pos] - 0.25f) * heightAmplifier;
+            plot.gameObject.transform.Translate(new Vector3(0, height, 0), Space.Self);
+        }
+    }
+
     public Plot GetPlot(int q, int r)
     {
         return plots.Where(p => p.Location.Q == q && p.Location.R == r).FirstOrDefault();
@@ -81,5 +97,5 @@ public class Grid : MonoBehaviour
     }
 
 
-  
+
 }
