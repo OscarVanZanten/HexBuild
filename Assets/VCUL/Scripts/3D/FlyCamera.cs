@@ -8,8 +8,10 @@ public class FlyCamera : MonoBehaviour
     public float climbSpeed = 4f;
     public float normalMoveSpeed = 10f;
     public float maxHeight = 100;
+    public float groundOFfset = 10;
     public Vector2 rotationLimitVertical;
 
+    private float speedScale { get { return transform.position.y / maxHeight; } }
     public Transform Camera;
 
     // Use this for initialization
@@ -40,27 +42,33 @@ public class FlyCamera : MonoBehaviour
             Camera.transform.localRotation = Quaternion.Euler(angle, 0, 0);
         }
 
-        transform.position += transform.right * (normalMoveSpeed) * Input.GetAxis("Horizontal") * Time.deltaTime;
-        transform.position += transform.forward * (normalMoveSpeed) * Input.GetAxis("Vertical") * Time.deltaTime;
+        transform.position += transform.right * (normalMoveSpeed * speedScale) * Input.GetAxis("Horizontal") * Time.deltaTime;
+        transform.position += transform.forward * (normalMoveSpeed * speedScale) * Input.GetAxis("Vertical") * Time.deltaTime;
 
         if (Input.GetKey(KeyCode.Space))
         {
-            float dist = Mathf.Min(transform.position.y + climbSpeed * Time.deltaTime, maxHeight) - transform.position.y;
+            float dist = Mathf.Min(transform.position.y + climbSpeed * speedScale * Time.deltaTime, maxHeight) - transform.position.y;
 
             transform.position += Vector3.up * dist;
         }
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            float dist = climbSpeed * Time.deltaTime;
+            float dist = climbSpeed * speedScale * Time.deltaTime;
             RaycastHit hit;
 
             if (Physics.Raycast(transform.position, Vector3.down, out hit))
             {
-                dist = Mathf.Min(hit.distance - 3, dist);
+                dist = Mathf.Min(hit.distance - groundOFfset, dist);
             }
 
             transform.position -= Vector3.up * dist;
+        }
+
+        RaycastHit hitUp;
+        if (Physics.Raycast(transform.position, Vector3.up, out hitUp))
+        {
+            transform.position -= Vector3.up * -(hitUp.distance + groundOFfset);
         }
     }
 }
