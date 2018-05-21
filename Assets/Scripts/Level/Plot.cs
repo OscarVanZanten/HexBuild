@@ -41,8 +41,8 @@ public class Plot : MonoBehaviour {
         for (int i = 0; i < amount; i++)
         {
             GameObject tree = GameObject.Instantiate(TreePrefab);
-            float x = (float)NoiseMapGenerator.Random.NextDouble() * 5;
-            float z = (float)NoiseMapGenerator.Random.NextDouble() * 5;
+            float x = (float)NoiseMapGenerator.Random.NextDouble() * 4;
+            float z = (float)NoiseMapGenerator.Random.NextDouble() * 4;
             float scale = MinScaleTree + (float)(NoiseMapGenerator.Random.NextDouble() * (MaxScaleTree - MinScaleTree));
             tree.transform.parent = ResourcesPosition;
             tree.transform.localPosition = new Vector3(x, 0, z);

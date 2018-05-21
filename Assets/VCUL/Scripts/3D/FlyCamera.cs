@@ -4,18 +4,9 @@ using UnityEngine;
 
 public class FlyCamera : MonoBehaviour
 {
-    [Header("Camera")]
-    [Tooltip("Multiplier for camera sensitivity.")]
-    [Range(0f, 300)]
     public float sensitivity = 90f;
-    [Tooltip("Multiplier for camera movement upwards.")]
-    [Range(0f, 10f)]
     public float climbSpeed = 4f;
-    [Tooltip("Multiplier for normal camera movement.")]
-    [Range(0f, 20f)]
     public float normalMoveSpeed = 10f;
-    [Range(0f, 5f)]
-    [Tooltip("Rotation limits for the X-axis in degrees. X represents the lowest and Y the highest value.")]
     public Vector2 rotationLimitVertical;
 
     public Transform Camera;
