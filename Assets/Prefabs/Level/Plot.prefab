@@ -643,7 +643,7 @@ MonoBehaviour:
   ResourcesPosition: {fileID: 4739636913801638}
   GrassTop: {fileID: 1393849041615604}
   WaterTop: {fileID: 1523355748771880}
-  TreePrefab: {fileID: 1291462153365142, guid: 35092d6d881e7fa42b7254804516df1f, type: 2}
+  TreePrefab: {fileID: 1195217210207260, guid: eaa30744737b7524eb9998ca61fd1a4f, type: 2}
   MinScaleTree: 0.33
   MaxScaleTree: 0.6
 --- !u!114 &114322595941257442

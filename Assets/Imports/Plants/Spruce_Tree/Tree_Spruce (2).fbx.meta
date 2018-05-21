@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: e1d5de5e7ecf5ee4190b2a2e40643183
-timeCreated: 1526897269
+guid: e500469b40059fc46938108b93dc9c59
+timeCreated: 1526929242
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
@@ -37,18 +37,17 @@ ModelImporter:
     6400004: Tree_Spruce_Leave_3
     6400006: Tree_Spruce_Leave_4
     6400008: Tree_Spruce_Trunk
-    9500000: //RootNode
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Tree_Spruce_Bark_Texture
-    second: {fileID: 2100000, guid: 0393a6dfdf1a01d41ba2c71b2775fa3b, type: 2}
+    second: {fileID: 2100000, guid: 1a4dc2443bf19ed41a73d7e6827da0b6, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Tree_Spruce_Light_Leave_Texture
-    second: {fileID: 2100000, guid: 7134170ac9f83234386c83a23ef9877f, type: 2}
+    second: {fileID: 2100000, guid: 3c2155a9dee8dae49a5ac08f0caa457d, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -120,7 +119,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
