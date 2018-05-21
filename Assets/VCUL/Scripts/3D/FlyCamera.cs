@@ -7,6 +7,7 @@ public class FlyCamera : MonoBehaviour
     public float sensitivity = 90f;
     public float climbSpeed = 4f;
     public float normalMoveSpeed = 10f;
+    public float maxHeight = 100;
     public Vector2 rotationLimitVertical;
 
     public Transform Camera;
@@ -39,17 +40,27 @@ public class FlyCamera : MonoBehaviour
             Camera.transform.localRotation = Quaternion.Euler(angle, 0, 0);
         }
 
-        transform.position += transform.right * (normalMoveSpeed ) * Input.GetAxis("Horizontal") * Time.deltaTime;
-        transform.position += transform.forward * (normalMoveSpeed ) * Input.GetAxis("Vertical") * Time.deltaTime;
+        transform.position += transform.right * (normalMoveSpeed) * Input.GetAxis("Horizontal") * Time.deltaTime;
+        transform.position += transform.forward * (normalMoveSpeed) * Input.GetAxis("Vertical") * Time.deltaTime;
 
         if (Input.GetKey(KeyCode.Space))
         {
-            transform.position += Vector3.up * climbSpeed * Time.deltaTime;
+            float dist = Mathf.Min(transform.position.y + climbSpeed * Time.deltaTime, maxHeight) - transform.position.y;
+
+            transform.position += Vector3.up * dist;
         }
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            transform.position -= Vector3.up * climbSpeed * Time.deltaTime;
+            float dist = climbSpeed * Time.deltaTime;
+            RaycastHit hit;
+
+            if (Physics.Raycast(transform.position, Vector3.down, out hit))
+            {
+                dist = Mathf.Min(hit.distance - 3, dist);
+            }
+
+            transform.position -= Vector3.up * dist;
         }
     }
 }
