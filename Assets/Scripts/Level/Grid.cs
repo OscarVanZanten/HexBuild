@@ -8,6 +8,7 @@ using UnityEngine;
 
 public class Grid : MonoBehaviour
 {
+    [Header("Level Generation")]
     [SerializeField] private GameObject plotPrefab;
     [SerializeField] private Transform terrain;
     [SerializeField] private int radius;
@@ -19,7 +20,7 @@ public class Grid : MonoBehaviour
     [SerializeField] private float SeaLevel;
     [SerializeField] private int MinAmountTrees;
     [SerializeField] private int MaxAmountTrees;
-
+    [Header("Buildings")]
     [SerializeField] private GameObject FisherHouse;
 
     private int Diameter { get { return radius * 2 + 1; } }

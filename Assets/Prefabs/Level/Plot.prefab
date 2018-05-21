@@ -690,16 +690,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d490298dea94d64d9ba77dba0f32b0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RenderDistance: 150
+  FadeStartDistance: 140
   StoneLayer: {fileID: 4817622292920910}
   DirtLayer: {fileID: 4907062790521564}
   DirtPercentage: 0.1
-  TreePrefab: {fileID: 100000, guid: e1d5de5e7ecf5ee4190b2a2e40643183, type: 3}
-  MinScaleTree: 0.33
-  MaxScaleTree: 0.6
   BuildingPosition: {fileID: 4111358465000700}
   ResourcesPosition: {fileID: 4739636913801638}
   GrassTop: {fileID: 1393849041615604}
   WaterTop: {fileID: 1523355748771880}
+  TreePrefab: {fileID: 100000, guid: e1d5de5e7ecf5ee4190b2a2e40643183, type: 3}
+  MinScaleTree: 0.33
+  MaxScaleTree: 0.6
 --- !u!205 &205616372318746254
 LODGroup:
   m_ObjectHideFlags: 1

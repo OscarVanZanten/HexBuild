@@ -29,7 +29,7 @@ public class FlyCamera : MonoBehaviour
         float x = Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
         float y = Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
 
-        if (Input.GetKey(KeyCode.LeftControl))
+        if (Input.GetKey(KeyCode.Mouse2))
         {
 
             transform.Rotate(Vector3.up, x, Space.Self);
