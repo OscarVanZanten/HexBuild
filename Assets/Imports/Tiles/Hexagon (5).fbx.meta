@@ -1,51 +1,52 @@
 fileFormatVersion: 2
-guid: d98e8623420976547bc68a1c49471dcc
-timeCreated: 1526842044
+guid: 5a779edc63b0bcb44957f478adb47bd4
+timeCreated: 1526894678
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
+    100002: Hexagon_Dirt_Bottom
+    100004: Hexagon_Dirt_Top
+    100006: Hexagon_Grass_Top
+    100008: Hexagon_Stone
     400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: pCylinder332
+    400002: Hexagon_Dirt_Bottom
+    400004: Hexagon_Dirt_Top
+    400006: Hexagon_Grass_Top
+    400008: Hexagon_Stone
+    2300000: Hexagon_Dirt_Bottom
+    2300002: Hexagon_Dirt_Top
+    2300004: Hexagon_Grass_Top
+    2300006: Hexagon_Stone
+    3300000: Hexagon_Dirt_Bottom
+    3300002: Hexagon_Dirt_Top
+    3300004: Hexagon_Grass_Top
+    3300006: Hexagon_Stone
+    4300000: Hexagon_Grass_Top
+    4300002: Hexagon_Dirt_Top
+    4300004: Hexagon_Dirt_Bottom
+    4300006: Hexagon_Stone
+    6400000: Hexagon_Dirt_Bottom
+    6400002: Hexagon_Dirt_Top
+    6400004: Hexagon_Grass_Top
+    6400006: Hexagon_Stone
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: lambert2
-    second: {fileID: 2100000, guid: b5e77e810f267c34da8b42a7379a5703, type: 2}
+      name: Dirt_Texture
+    second: {fileID: 2100000, guid: 1409652e5e288dd4386dd3a7b303a595, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: lambert3
-    second: {fileID: 2100000, guid: 4e3a50cd23c09df49ade8069a187f28f, type: 2}
+      name: Grass_Texture
+    second: {fileID: 2100000, guid: f88c98c6614d17745b992110125ac1b9, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: lambert4
-    second: {fileID: 2100000, guid: 2faa731fb7eadac4397ae00eea2fbe0b, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: lambert5
-    second: {fileID: 2100000, guid: e6ff6a07324f4aa4783439a8bf5a527a, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: lambert6
-    second: {fileID: 2100000, guid: b5067779256787946be6b7b8f52c637b, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: lambert7
-    second: {fileID: 2100000, guid: bcbf8a8e2e646344c9fdbf69f2b59724, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: lambert8
-    second: {fileID: 2100000, guid: 0a4afe641c4c5ef4985f1cc4690a3150, type: 2}
+      name: Stone_Texture
+    second: {fileID: 2100000, guid: 0a37d1deb8f460743ae52def6081ded8, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -77,7 +78,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
@@ -92,7 +93,7 @@ ModelImporter:
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
-    useFileScale: 1
+    useFileScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0

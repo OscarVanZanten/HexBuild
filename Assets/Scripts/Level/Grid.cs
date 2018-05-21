@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Level;
 using Assets.Scripts.Utils;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,11 @@ public class Grid : MonoBehaviour
     [SerializeField] private int radius;
     [SerializeField] private float size;
     [SerializeField] private float heightAmplifier;
+    [SerializeField] private float heightOffset;
+    [SerializeField] private float scale;
+    [SerializeField] private float TreeLine;
+    [SerializeField] private int MinAmountTrees;
+    [SerializeField] private int MaxAmountTrees;
 
     private int Diameter { get { return radius * 2 + 1; } }
 
@@ -32,13 +38,14 @@ public class Grid : MonoBehaviour
 
     private void Generate(float seed)
     {
-        GenerateTerrain( seed);
+        GenerateTerrain(seed);
     }
 
     private void GenerateTerrain(float seed)
     {
         GeneratePlots();
         GenerateHills(seed);
+        GenerateTrees();
     }
 
     private void GeneratePlots()
@@ -76,15 +83,28 @@ public class Grid : MonoBehaviour
 
     private void GenerateHills(float seed)
     {
-        float[] map = NoiseMapGenerator.GeneratePerlinNoice(Diameter, Diameter,(float) seed);
+        float[] map = NoiseMapGenerator.GeneratePerlinNoice(Diameter, Diameter, (float)seed, scale);
 
         foreach (Plot plot in plots)
         {
             int pos = (plot.Location.Q + radius) + (plot.Location.R + radius) * Diameter;
-            float height =  (map[pos] - 0.25f) * heightAmplifier;
-            plot.gameObject.transform.Translate(new Vector3(0, height, 0), Space.Self);
+            float height = Mathf.Pow((map[pos] + 1), heightAmplifier) + heightOffset;
+            plot.Height = height;
         }
     }
+
+    private void GenerateTrees()
+    {
+        foreach (Plot plot in plots)
+        {
+            if (plot.Height <= TreeLine)
+            {
+                int amount = NoiseMapGenerator.Random.Next(MinAmountTrees, MaxAmountTrees);
+                plot.SetTrees(amount);
+            }
+        }
+    }
+
 
     public Plot GetPlot(int q, int r)
     {
