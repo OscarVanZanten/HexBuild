@@ -164,7 +164,7 @@ MonoBehaviour:
   scale: 0.2
   TreeLine: 10
   SeaLevel: 3
-  MinAmountTrees: 1
+  MinAmountTrees: 0
   MaxAmountTrees: 3
   FisherHouse: {fileID: 100000, guid: 8184c7bf3c0a48c41bd6b6a2dc005b40, type: 3}
 --- !u!1001 &841783449

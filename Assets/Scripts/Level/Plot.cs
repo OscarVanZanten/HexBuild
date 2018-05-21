@@ -110,9 +110,9 @@ public class Plot : MonoBehaviour
     void Update()
     {
        
-        Vector2 camPos = new Vector2(Camera.main.transform.position.x, Camera.main.transform.position.z);
-        Vector2 currentPos = new Vector2(transform.position.x, transform.position.z);
-        float dist = (camPos - currentPos).magnitude;
+        //Vector2 camPos = new Vector2(Camera.main.transform.position.x, Camera.main.transform.position.z);
+       // Vector2 currentPos = new Vector2(transform.position.x, transform.position.z);
+        float dist = (Camera.main.transform.position - transform.position).magnitude;
 
 
         if (dist < FadeStartDistance)
