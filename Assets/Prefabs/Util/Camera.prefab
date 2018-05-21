@@ -128,7 +128,7 @@ MonoBehaviour:
   sensitivity: 45
   climbSpeed: 15
   normalMoveSpeed: 25
-  rotationLimitVertical: {x: 30, y: 90}
+  rotationLimitVertical: {x: 40, y: 90}
   Camera: {fileID: 4605540500531178}
 --- !u!124 &124641802069128922
 Behaviour:

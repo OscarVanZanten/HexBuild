@@ -4,6 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum PlotType { Ground, Water}
+
 public class Plot : MonoBehaviour {
 
     [SerializeField] private Transform StoneLayer;
@@ -14,8 +17,37 @@ public class Plot : MonoBehaviour {
     [SerializeField] private float MinScaleTree;
     [SerializeField] private float MaxScaleTree;
 
+    [SerializeField] private Transform BuildingPosition;
     [SerializeField] private Transform ResourcesPosition;
+    [SerializeField] private GameObject GrassTop;
+    [SerializeField] private GameObject WaterTop;
+
+
     private List<GameObject> Resources = new List<GameObject>();
+
+    private PlotType type = PlotType.Ground;
+    public PlotType Type
+    {
+        get
+        {
+            return type;
+        }
+        set
+        {
+            type = value;
+            switch (type)
+            {
+                case PlotType.Ground:
+                    GrassTop.SetActive(true);
+                    WaterTop.SetActive(false);
+                    break;
+                case PlotType.Water:
+                    GrassTop.SetActive(false);
+                    WaterTop.SetActive(true);
+                    break;
+            }
+        }
+    }
 
     public HexLocation Location { get; set; }
     private float height;
@@ -49,6 +81,13 @@ public class Plot : MonoBehaviour {
             tree.transform.localScale = new Vector3(scale, scale, scale);
             tree.transform.localRotation = Quaternion.Euler(0, (float)(NoiseMapGenerator.Random.NextDouble() * 360.0), 0);
         }
+    }
+
+    public void SetBuilding(GameObject obj, int rotation)
+    {
+        obj.transform.parent = BuildingPosition;
+        obj.transform.localPosition = new Vector3();
+        obj.transform.localRotation = Quaternion.Euler(0, 30 * rotation, 0);
     }
 
 	// Use this for initialization
