@@ -82,7 +82,7 @@ public class Grid : MonoBehaviour
                         float zzz = zz * ((zz % 2 == 0) ? 1 : 1.5f);
                         GameObject obj = GameObject.Instantiate(plotPrefab);
                         obj.transform.parent = terrain;
-                        obj.transform.localPosition = new Vector3(xx * size, yy * size, zz * size);
+                        obj.transform.localPosition = new Vector3(xx * size, yy  * size, zz  * size);
 
                         Plot plot = obj.GetComponent<Plot>();
                         plot.Location = new HexLocation(xx, zz);

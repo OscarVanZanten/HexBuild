@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4702751523797810}
   - component: {fileID: 33834638255375112}
   - component: {fileID: 23821013916806684}
-  - component: {fileID: 64508919318375462}
+  - component: {fileID: 114078498508095462}
   m_Layer: 0
   m_Name: Hexagon_Grass_Top
   m_TagString: Untagged
@@ -69,7 +69,7 @@ GameObject:
   - component: {fileID: 4817622292920910}
   - component: {fileID: 33452972960332882}
   - component: {fileID: 23165819147150008}
-  - component: {fileID: 64433537835419694}
+  - component: {fileID: 114818370763778340}
   m_Layer: 0
   m_Name: Hexagon_Stone
   m_TagString: Untagged
@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 4302282185084378}
   - component: {fileID: 33493811690816086}
   - component: {fileID: 23258706084241772}
-  - component: {fileID: 64841638229766000}
+  - component: {fileID: 114789380810555004}
   m_Layer: 0
   m_Name: Hexagon_Dirt_Top
   m_TagString: Untagged
@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 4907062790521564}
   - component: {fileID: 33658118276220746}
   - component: {fileID: 23612223938852182}
-  - component: {fileID: 64485121591715270}
+  - component: {fileID: 114729945998622476}
   m_Layer: 0
   m_Name: Hexagon_Dirt_Bottom
   m_TagString: Untagged
@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 4641929382853606}
   - component: {fileID: 33986933248297278}
   - component: {fileID: 23163426328688882}
-  - component: {fileID: 64519523838503784}
+  - component: {fileID: 114322595941257442}
   m_Layer: 0
   m_Name: Water
   m_TagString: Untagged
@@ -215,7 +215,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4365541329711652}
-  - component: {fileID: 205616372318746254}
   m_Layer: 0
   m_Name: Hexagon (5)
   m_TagString: Untagged
@@ -609,76 +608,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1574532095154852}
   m_Mesh: {fileID: 4300000, guid: c57353051d74b8c43befdf921e27a8c1, type: 3}
---- !u!64 &64433537835419694
-MeshCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1394690371268328}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Convex: 0
-  m_InflateMesh: 0
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 4300006, guid: 5a779edc63b0bcb44957f478adb47bd4, type: 3}
---- !u!64 &64485121591715270
-MeshCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1520886023347184}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Convex: 0
-  m_InflateMesh: 0
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 4300004, guid: 5a779edc63b0bcb44957f478adb47bd4, type: 3}
---- !u!64 &64508919318375462
-MeshCollider:
+--- !u!114 &114078498508095462
+MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1028438418781802}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Convex: 0
-  m_InflateMesh: 0
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 4300000, guid: 5a779edc63b0bcb44957f478adb47bd4, type: 3}
---- !u!64 &64519523838503784
-MeshCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1574532095154852}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Convex: 0
-  m_InflateMesh: 0
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 4300000, guid: c57353051d74b8c43befdf921e27a8c1, type: 3}
---- !u!64 &64841638229766000
-MeshCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1425090142355050}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Convex: 0
-  m_InflateMesh: 0
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 4300002, guid: 5a779edc63b0bcb44957f478adb47bd4, type: 3}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a079e0bd5b60fc54dad34caaa57aba35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SolidMaterials:
+  - {fileID: 2100000, guid: f88c98c6614d17745b992110125ac1b9, type: 2}
+  FadeMaterials:
+  - {fileID: 2100000, guid: 530cf96b80e2b5845af450aab69cc812, type: 2}
 --- !u!114 &114094077277415048
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -690,8 +634,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d490298dea94d64d9ba77dba0f32b0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RenderDistance: 150
-  FadeStartDistance: 140
+  RenderDistance: 130
+  FadeStartDistance: 128
   StoneLayer: {fileID: 4817622292920910}
   DirtLayer: {fileID: 4907062790521564}
   DirtPercentage: 0.1
@@ -699,28 +643,66 @@ MonoBehaviour:
   ResourcesPosition: {fileID: 4739636913801638}
   GrassTop: {fileID: 1393849041615604}
   WaterTop: {fileID: 1523355748771880}
-  TreePrefab: {fileID: 100000, guid: e1d5de5e7ecf5ee4190b2a2e40643183, type: 3}
+  TreePrefab: {fileID: 1291462153365142, guid: 35092d6d881e7fa42b7254804516df1f, type: 2}
   MinScaleTree: 0.33
   MaxScaleTree: 0.6
---- !u!205 &205616372318746254
-LODGroup:
+--- !u!114 &114322595941257442
+MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1911000994835910}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
-  m_Size: 1
-  m_FadeMode: 1
-  m_AnimateCrossFading: 1
-  m_LODs:
-  - screenRelativeHeight: 0.6
-    fadeTransitionWidth: 0
-    renderers: []
-  - screenRelativeHeight: 0.3
-    fadeTransitionWidth: 0
-    renderers: []
-  - screenRelativeHeight: 0.1
-    fadeTransitionWidth: 0
-    renderers: []
+  m_GameObject: {fileID: 1574532095154852}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a079e0bd5b60fc54dad34caaa57aba35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SolidMaterials:
+  - {fileID: 2100000, guid: 1e3d0e2a3ae82c44fbb86dad915264d3, type: 2}
+  FadeMaterials:
+  - {fileID: 2100000, guid: 405a2cf73ec08304885fdfd2894d8322, type: 2}
+--- !u!114 &114729945998622476
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1520886023347184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a079e0bd5b60fc54dad34caaa57aba35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SolidMaterials:
+  - {fileID: 2100000, guid: 1409652e5e288dd4386dd3a7b303a595, type: 2}
+  FadeMaterials:
+  - {fileID: 2100000, guid: 438175a4c0fb72e4d8237fda650c8688, type: 2}
+--- !u!114 &114789380810555004
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1425090142355050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a079e0bd5b60fc54dad34caaa57aba35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SolidMaterials:
+  - {fileID: 2100000, guid: 1409652e5e288dd4386dd3a7b303a595, type: 2}
+  FadeMaterials:
+  - {fileID: 2100000, guid: 438175a4c0fb72e4d8237fda650c8688, type: 2}
+--- !u!114 &114818370763778340
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1394690371268328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a079e0bd5b60fc54dad34caaa57aba35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SolidMaterials:
+  - {fileID: 2100000, guid: 0a37d1deb8f460743ae52def6081ded8, type: 2}
+  FadeMaterials:
+  - {fileID: 2100000, guid: 5440a97c2a44b5845bcbb5013d7fee4d, type: 2}

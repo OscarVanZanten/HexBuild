@@ -31,7 +31,7 @@ public class Plot : MonoBehaviour
 
     private List<GameObject> resources = new List<GameObject>();
 
-    private MeshRenderer[] renderes;
+    private ObjectFade[] FadeObject;
     private bool rendered;
 
     private PlotType type = PlotType.Ground;
@@ -102,53 +102,47 @@ public class Plot : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        renderes = GetComponentsInChildren<MeshRenderer>();
+        FadeObject = GetComponentsInChildren<ObjectFade>();
         rendered = true;
     }
 
     // Update is called once per frame
     void Update()
     {
+       
         Vector2 camPos = new Vector2(Camera.main.transform.position.x, Camera.main.transform.position.z);
         Vector2 currentPos = new Vector2(transform.position.x, transform.position.z);
         float dist = (camPos - currentPos).magnitude;
 
-        if (dist >= RenderDistance && rendered)
+
+        if (dist < FadeStartDistance)
+        {
+            FadeRenders(1);
+            return;
+        }
+
+        if (dist >= RenderDistance )
         {
             rendered = false;
-            EnableRenders(rendered);
+            FadeRenders(0);
         }
 
         if (dist > FadeStartDistance && dist < RenderDistance)
         {
-            float ratio = 1-(dist - FadeStartDistance) / (RenderDistance - FadeStartDistance);
+            float ratio = 1 - (dist - FadeStartDistance) / (RenderDistance - FadeStartDistance);
             FadeRenders(ratio);
         }
 
-        if (dist < RenderDistance && !rendered)
-        {
-            rendered = true;
-            EnableRenders(rendered);
-        }
-    }
-
-    private void EnableRenders(bool enabled)
-    {
-        foreach (MeshRenderer renderer in renderes)
-        {
-            renderer.enabled = enabled;
-        }
+     
     }
 
     private void FadeRenders(float fade)
     {
-        foreach (MeshRenderer renderer in renderes)
+        foreach (ObjectFade objectFade in FadeObject)
         {
-            foreach (Material material in renderer.materials)
-            {
-                Color color = new Color(material.color.r, material.color.g, material.color.b, fade);
-                material.color = color;
-            }
+            if (fade == 1 && objectFade.IsSolid) continue;
+
+            objectFade.SetFade(fade);
         }
     }
 }
