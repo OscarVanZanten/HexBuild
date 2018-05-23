@@ -12,6 +12,7 @@ public class Plot : MonoBehaviour
     [Header("Optimization")]
     [SerializeField] private float RenderDistance;
     [SerializeField] private float FadeStartDistance;
+    [SerializeField] private GameObject Hexagon;
 
     [Header("Ground Layers")]
     [SerializeField] private Transform StoneLayer;
@@ -32,7 +33,6 @@ public class Plot : MonoBehaviour
     private List<GameObject> resources = new List<GameObject>();
 
     private ObjectFade[] FadeObject;
-    private bool rendered;
 
     private PlotType type = PlotType.Ground;
     public PlotType Type
@@ -103,37 +103,32 @@ public class Plot : MonoBehaviour
     void Start()
     {
         FadeObject = GetComponentsInChildren<ObjectFade>();
-        rendered = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-       
-        //Vector2 camPos = new Vector2(Camera.main.transform.position.x, Camera.main.transform.position.z);
-       // Vector2 currentPos = new Vector2(transform.position.x, transform.position.z);
-        float dist = (Camera.main.transform.position - transform.position).magnitude;
+        Vector2 camPos = new Vector2(Camera.main.transform.position.x, Camera.main.transform.position.z);
+        Vector2 currentPos = new Vector2(transform.position.x, transform.position.z);
+        //  float dist = (Camera.main.transform.position - transform.position).magnitude;
+        float dist = (camPos - currentPos).magnitude;
 
-
-        if (dist < FadeStartDistance)
+        if (dist > FadeStartDistance && dist < RenderDistance)
+        {
+            Hexagon.SetActive(true);
+            float ratio = 1 - (dist - FadeStartDistance) / (RenderDistance - FadeStartDistance);
+            FadeRenders(ratio);
+        }
+        else if (dist >= RenderDistance)
+        {
+            Hexagon.SetActive(false);
+            FadeRenders(0);
+        }
+        else if (dist < FadeStartDistance)
         {
             FadeRenders(1);
             return;
         }
-
-        if (dist >= RenderDistance )
-        {
-            rendered = false;
-            FadeRenders(0);
-        }
-
-        if (dist > FadeStartDistance && dist < RenderDistance)
-        {
-            float ratio = 1 - (dist - FadeStartDistance) / (RenderDistance - FadeStartDistance);
-            FadeRenders(ratio);
-        }
-
-     
     }
 
     private void FadeRenders(float fade)

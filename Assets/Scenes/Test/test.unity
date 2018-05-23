@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4512604, g: 0.50095415, b: 0.57342225, a: 1}
+  m_IndirectSpecularColor: {r: 0.45126003, g: 0.5009536, b: 0.57342154, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -154,44 +154,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1171559e7c4a2284f89df27e11295d9e, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &557718353 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1520886023347184, guid: 1171559e7c4a2284f89df27e11295d9e,
-    type: 2}
-  m_PrefabInternal: {fileID: 557718352}
---- !u!64 &557718354
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 557718353}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Convex: 0
-  m_InflateMesh: 0
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 4300004, guid: 5a779edc63b0bcb44957f478adb47bd4, type: 3}
---- !u!1 &557718355 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1394690371268328, guid: 1171559e7c4a2284f89df27e11295d9e,
-    type: 2}
-  m_PrefabInternal: {fileID: 557718352}
---- !u!64 &557718356
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 557718355}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Convex: 0
-  m_InflateMesh: 0
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 4300006, guid: 5a779edc63b0bcb44957f478adb47bd4, type: 3}
 --- !u!1 &840319539
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,7 +199,7 @@ MonoBehaviour:
   plotPrefab: {fileID: 1858701088794844, guid: 1171559e7c4a2284f89df27e11295d9e, type: 2}
   terrain: {fileID: 1842225309}
   radius: 30
-  size: 7.4
+  size: 7.35
   heightAmplifier: 5.5
   heightOffset: 0
   scale: 0.2
