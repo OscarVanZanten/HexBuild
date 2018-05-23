@@ -29,7 +29,7 @@ public class ObjectFade : MonoBehaviour
 
     public void SetFade(float fade)
     {
-        if (!this.gameObject.activeSelf) return;
+        if (!this.gameObject.activeInHierarchy) return;
         if (fade.Equals(currentFade)) return;
 
         currentFade = fade;
