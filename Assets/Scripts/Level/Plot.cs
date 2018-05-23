@@ -13,6 +13,7 @@ public class Plot : MonoBehaviour
     [SerializeField] private float RenderDistance;
     [SerializeField] private float FadeStartDistance;
     [SerializeField] private GameObject Hexagon;
+    private bool IsSolid { get; set; }
 
     [Header("Ground Layers")]
     [SerializeField] private Transform StoneLayer;
@@ -108,35 +109,44 @@ public class Plot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector2 camPos = new Vector2(Camera.main.transform.position.x, Camera.main.transform.position.z);
-        Vector2 currentPos = new Vector2(transform.position.x, transform.position.z);
-        //  float dist = (Camera.main.transform.position - transform.position).magnitude;
-        float dist = (camPos - currentPos).magnitude;
+        float dist = GetDistanceFromCamera();
 
-        if (dist > FadeStartDistance && dist < RenderDistance)
+        if (dist >= RenderDistance)
         {
-            Hexagon.SetActive(true);
-            float ratio = 1 - (dist - FadeStartDistance) / (RenderDistance - FadeStartDistance);
-            FadeRenders(ratio);
-        }
-        else if (dist >= RenderDistance)
-        {
-            Hexagon.SetActive(false);
             FadeRenders(0);
+            if(Hexagon.activeSelf) Hexagon.SetActive(false);
+            return;
         }
-        else if (dist < FadeStartDistance)
+        else if (dist > FadeStartDistance && dist < RenderDistance)
+        {
+            FadeRenders(1 - (dist - FadeStartDistance) / (RenderDistance - FadeStartDistance));
+            if (!Hexagon.activeSelf) Hexagon.SetActive(true);
+            return;
+        }
+        else
         {
             FadeRenders(1);
             return;
         }
     }
 
+    private float GetDistanceFromCamera()
+    {
+        //Vector2 camPos = new Vector2(Camera.main.transform.position.x, Camera.main.transform.position.z);
+        //Vector2 currentPos = new Vector2(transform.position.x, transform.position.z);
+        return (Camera.main.transform.position - transform.position).magnitude;
+        //return (camPos - currentPos).magnitude;
+    }
+
+
     private void FadeRenders(float fade)
     {
+        if (fade == 1 && IsSolid) return;
+        if (fade == 1) IsSolid = true;
+        if (fade < 1) IsSolid = false;
+
         foreach (ObjectFade objectFade in FadeObject)
         {
-            if (fade == 1 && objectFade.IsSolid) continue;
-
             objectFade.SetFade(fade);
         }
     }

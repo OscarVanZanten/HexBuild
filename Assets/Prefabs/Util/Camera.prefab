@@ -125,10 +125,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b7487f31bf5c8e4fbd7821b02e513c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensitivity: 45
+  sensitivity: 90
   climbSpeed: 15
   normalMoveSpeed: 25
   maxHeight: 75
+  groundOFfset: 10
   rotationLimitVertical: {x: 40, y: 90}
   Camera: {fileID: 4605540500531178}
 --- !u!124 &124641802069128922

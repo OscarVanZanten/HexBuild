@@ -11,7 +11,7 @@ public class ObjectFade : MonoBehaviour
     private MeshRenderer renderer;
     private bool rendered;
     private float currentFade;
-    public bool IsSolid { get; internal set; }
+  
 
     // Use this for initialization
     void Start()
@@ -19,12 +19,6 @@ public class ObjectFade : MonoBehaviour
         this.renderer = GetComponent<MeshRenderer>();
         this.rendered = true;
         this.currentFade = 1;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void SetFade(float fade)
@@ -55,10 +49,9 @@ public class ObjectFade : MonoBehaviour
         if (fade == 1)
         {
             if (!renderer.material.Equals(SolidMaterials)) renderer.materials = SolidMaterials;
-            IsSolid = true;
+           
             return;
         }
-        IsSolid = false;
         if (!renderer.material.Equals(FadeMaterials)) renderer.materials = FadeMaterials;
 
         foreach (Material material in renderer.materials)

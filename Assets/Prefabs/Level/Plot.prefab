@@ -713,6 +713,7 @@ MonoBehaviour:
   RenderDistance: 150
   FadeStartDistance: 147
   Hexagon: {fileID: 1911000994835910}
+  UpdateRate: 0
   StoneLayer: {fileID: 4817622292920910}
   DirtLayer: {fileID: 4907062790521564}
   DirtPercentage: 0.1
