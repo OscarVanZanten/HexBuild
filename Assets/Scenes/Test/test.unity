@@ -196,13 +196,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c48ce763755c54096da19c1070e625, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RenderRadius: 16
-  RenderDistance: 125
-  FadeStartDistance: 147
-  UpdateRate: 0.1
+  RenderRadius: 20
+  FadeDistanceStart: 0
+  UpdateRate: 100
+  UpdateAmount: 20
   plotPrefab: {fileID: 1858701088794844, guid: 1171559e7c4a2284f89df27e11295d9e, type: 2}
   terrain: {fileID: 1842225309}
-  radius: 60
+  radius: 50
   size: 7.35
   heightAmplifier: 5.5
   heightOffset: 0

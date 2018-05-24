@@ -14,8 +14,6 @@ namespace Assets.Scripts.Utils
         {
             float[] map = new float[width * height];
 
-            float offset = (width + height) / (seed * seed);
-
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)

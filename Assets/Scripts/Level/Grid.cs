@@ -9,14 +9,17 @@ using UnityEngine;
 public class Grid : MonoBehaviour
 {
     [Header("Optimization")]
+    [Tooltip("The max radius of tiles being rendered(1 tile = 1 unit)")]
     [SerializeField] private int RenderRadius;
-    [SerializeField] private float RenderDistance;
-    [SerializeField] private float FadeStartDistance;
+    private float RenderDistance { get { return RenderRadius * size * (float)Math.Sqrt(2); } }
+    [SerializeField] private float FadeDistanceStart;
+    [Tooltip("Amount of graphical level updates per second")]
     [SerializeField] private float UpdateRate;
     [SerializeField] private int UpdateAmount;
-    private int index;
-    private float UpdateDelta;
-    private bool cleared = false;
+    private List<Plot> PlotUpdateList;
+    private float PlotUpdateDelta;
+    private int CurrentPlotIndex;
+    private bool PlotsCleared = false;
 
     [Header("Level Generation")]
     [SerializeField] private GameObject plotPrefab;
@@ -30,14 +33,12 @@ public class Grid : MonoBehaviour
     [SerializeField] private float SeaLevel;
     [SerializeField] private int MinAmountTrees;
     [SerializeField] private int MaxAmountTrees;
+    private Dictionary<HexLocation, Plot> plots;
+    private int Diameter { get { return radius * 2 + 1; } }
 
     [Header("Buildings")]
     [SerializeField] private GameObject FisherHouse;
-
-    private int Diameter { get { return radius * 2 + 1; } }
-
-    private Dictionary<HexLocation, Plot> plots;
-
+    
     // Use this for initialization
     void Start()
     {
@@ -48,65 +49,69 @@ public class Grid : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!cleared)
+        if (!PlotsCleared)
         {
             ClearPlots();
-            cleared = true;
+            PlotsCleared = true;
         }
 
-        UpdateDelta += Time.deltaTime;
-        if (UpdateDelta > UpdateRate)
+        PlotUpdateDelta += Time.deltaTime;
+        while (PlotUpdateDelta > 1/ UpdateRate)
         {
-            UpdateDelta -= UpdateRate;
-            UpdateDrawnPlots();
+            PlotUpdateDelta -= 1/UpdateRate;
+            //UpdateDrawnPlots();
+            if (PlotUpdateList == null)
+            {
+                PlotUpdateList = GetPlotsSurroundingCamera(RenderRadius);
+                return;
+            }
+
+            for (int i = 0; i < UpdateAmount; i++)
+            {
+                CurrentPlotIndex++;
+                if (CurrentPlotIndex != PlotUpdateList.Count)
+                {
+                    UpdatePlot(PlotUpdateList[CurrentPlotIndex]);
+                }
+                else
+                {
+                    PlotUpdateList = GetPlotsSurroundingCamera(RenderRadius);
+                    CurrentPlotIndex = 0;
+                }
+            }
+
         }
     }
 
     private void ClearPlots()
     {
-        RaycastHit hitUp;
-        if (Physics.Raycast(Camera.main.transform.position, Vector3.down, out hitUp))
+        List<Plot> cleareingplots = plots.Values.ToList();
+
+        if (cleareingplots != null)
         {
-            Plot plot = hitUp.transform.gameObject.GetComponentInParent<Plot>();
-
-            if (plot == null)
-            {
-                throw new UnityException("Not above a tile to clear the level");
-            }
-
-            List<Plot> renderedPlots = GetSurroundingPlots(RenderRadius-1, plot.Location);
-
-            foreach (Plot p in plots.Values)
-            {
-                if (!renderedPlots.Contains(p) && !p.Equals(plot))
-                {
-                    //p.UpdateFade(0);
-                    p.ToggleHex(false);
-                }
-            }
+            foreach (Plot p in cleareingplots) p.ToggleHex(false);
         }
     }
 
     private void UpdateDrawnPlots()
     {
-        RaycastHit hitUp;
-        if (Physics.Raycast(Camera.main.transform.position, Vector3.down, out hitUp))
+        List<Plot> plots = GetPlotsSurroundingCamera(RenderRadius);
+
+        if (plots != null)
         {
-            Plot plot = hitUp.transform.gameObject.GetComponentInParent<Plot>();
-
-            if (plot != null)
-            {
-                List<Plot> pl = GetSurroundingPlots(RenderRadius, plot.Location);
-
-                foreach (Plot p in pl)
-                {
-                    float dist = (Camera.main.transform.position - p.transform.position).magnitude;
-
-
-                    p.ToggleHex(dist <= RenderDistance-1);
-                }
-            }
+            foreach (Plot p in plots) UpdatePlot(p);
         }
+    }
+
+    private void UpdatePlot(Plot p)
+    {
+        Vector2 cam = new Vector2(Camera.main.transform.position.x - p.transform.position.x, Camera.main.transform.position.z - p.transform.position.z);
+
+        float dist = cam.magnitude;
+
+        // p.ToggleHex(dist <= RenderDistance - 1);
+        p.ToggleHex(dist < RenderDistance);
+        //  p.UpdateFade(Mathf.Min(dist / FadeStartDistance, 1));
     }
 
     private void Generate(float seed)
@@ -147,15 +152,13 @@ public class Grid : MonoBehaviour
 
                     if (xyz == 0)
                     {
-                        float xxx = xx * ((xx % 2 == 0) ? 1 : 1.5f);
-                        float zzz = zz * ((zz % 2 == 0) ? 1 : 1.5f);
                         GameObject obj = GameObject.Instantiate(plotPrefab);
                         obj.transform.parent = terrain;
                         obj.transform.localPosition = new Vector3(xx * size, yy * size, zz * size);
 
                         Plot plot = obj.GetComponent<Plot>();
-                        plot.Location = new HexLocation(xx,yy, zz);
-                      
+                        plot.Location = new HexLocation(xx, yy, zz);
+
                         plots.Add(plot.Location, plot);
                     }
                 }
@@ -238,7 +241,7 @@ public class Grid : MonoBehaviour
 
     public Plot GetPlot(int x, int y, int z)
     {
-        HexLocation location = new HexLocation(x,y,z);
+        HexLocation location = new HexLocation(x, y, z);
         Plot p = null;
         plots.TryGetValue(location, out p);
         return p;
@@ -258,7 +261,7 @@ public class Grid : MonoBehaviour
 
     public List<Plot> GetSurroundingPlots(int x, int y, int z)
     {
-        return GetSurroundingPlots(new HexLocation(x,y,z));
+        return GetSurroundingPlots(new HexLocation(x, y, z));
     }
 
     private List<Plot> GetSurroundingPlots(int radius, HexLocation loc)
@@ -271,8 +274,6 @@ public class Grid : MonoBehaviour
             {
                 for (int zz = -RenderRadius; zz < RenderRadius; zz++)
                 {
-                    if (xx == 0 && yy == 0 && zz == 0) continue;
-
                     Plot plot = GetPlot(xx + loc.X, yy + loc.Y, zz + loc.Z);
                     if (plot != null)
                     {
@@ -283,5 +284,58 @@ public class Grid : MonoBehaviour
             }
         }
         return p;
+    }
+
+    private List<Plot> GetPlotsRing(int radius, int innerradius, HexLocation loc)
+    {
+        List<Plot> p = new List<Plot>();
+
+        for (int xx = -RenderRadius; xx < RenderRadius; xx++)
+        {
+            for (int yy = -RenderRadius; yy < RenderRadius; yy++)
+            {
+                for (int zz = -RenderRadius; zz < RenderRadius; zz++)
+                {
+                    if (Mathf.Max(Math.Abs(xx), Math.Abs(yy), Math.Abs(zz)) < innerradius) continue;
+
+                    Plot plot = GetPlot(xx + loc.X, yy + loc.Y, zz + loc.Z);
+                    if (plot != null)
+                    {
+                        p.Add(plot);
+                    }
+                }
+            }
+        }
+        return p;
+    }
+
+    private List<Plot> GetPlotRingCamera(int radius, int innerRadius)
+    {
+        RaycastHit hitUp;
+        if (Physics.Raycast(Camera.main.transform.position, Vector3.down, out hitUp))
+        {
+            Plot plot = hitUp.transform.gameObject.GetComponentInParent<Plot>();
+
+            if (plot != null)
+            {
+                return GetPlotsRing(RenderRadius, innerRadius, plot.Location);
+            }
+        }
+        return null;
+    }
+
+    private List<Plot> GetPlotsSurroundingCamera(int radius)
+    {
+        RaycastHit hitUp;
+        if (Physics.Raycast(Camera.main.transform.position, Vector3.down, out hitUp))
+        {
+            Plot plot = hitUp.transform.gameObject.GetComponentInParent<Plot>();
+
+            if (plot != null)
+            {
+                return GetSurroundingPlots(RenderRadius, plot.Location);
+            }
+        }
+        return null;
     }
 }
