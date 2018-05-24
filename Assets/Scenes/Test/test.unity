@@ -199,7 +199,7 @@ MonoBehaviour:
   RenderRadius: 20
   FadeDistanceStart: 0
   UpdateRate: 100
-  UpdateAmount: 20
+  UpdateAmount: 30
   plotPrefab: {fileID: 1858701088794844, guid: 1171559e7c4a2284f89df27e11295d9e, type: 2}
   terrain: {fileID: 1842225309}
   radius: 50

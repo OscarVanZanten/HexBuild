@@ -11,7 +11,7 @@ public class Grid : MonoBehaviour
     [Header("Optimization")]
     [Tooltip("The max radius of tiles being rendered(1 tile = 1 unit)")]
     [SerializeField] private int RenderRadius;
-    private float RenderDistance { get { return RenderRadius * size * (float)Math.Sqrt(2); } }
+    private float RenderDistance { get { return (RenderRadius - 5) * size * (float)Math.Sqrt(2); } }
     [SerializeField] private float FadeDistanceStart;
     [Tooltip("Amount of graphical level updates per second")]
     [SerializeField] private float UpdateRate;
@@ -38,11 +38,11 @@ public class Grid : MonoBehaviour
 
     [Header("Buildings")]
     [SerializeField] private GameObject FisherHouse;
-    
+
     // Use this for initialization
     void Start()
     {
-        float seed = Mathf.Min((float)NoiseMapGenerator.Random.NextDouble() + 0.25f, 1);
+        float seed = Mathf.Min((float)NoiseMapGenerator.Random.NextDouble() + 0.33f, 1);
         Generate(seed);
     }
 
@@ -56,9 +56,9 @@ public class Grid : MonoBehaviour
         }
 
         PlotUpdateDelta += Time.deltaTime;
-        while (PlotUpdateDelta > 1/ UpdateRate)
+        while (PlotUpdateDelta > 1 / UpdateRate)
         {
-            PlotUpdateDelta -= 1/UpdateRate;
+            PlotUpdateDelta -= 1 / UpdateRate;
             //UpdateDrawnPlots();
             if (PlotUpdateList == null)
             {
@@ -109,8 +109,7 @@ public class Grid : MonoBehaviour
 
         float dist = cam.magnitude;
 
-        // p.ToggleHex(dist <= RenderDistance - 1);
-        p.ToggleHex(dist < RenderDistance);
+        p.ToggleHex(dist <= RenderDistance );
         //  p.UpdateFade(Mathf.Min(dist / FadeStartDistance, 1));
     }
 
