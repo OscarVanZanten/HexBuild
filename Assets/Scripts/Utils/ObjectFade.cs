@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,10 +9,12 @@ public class ObjectFade : MonoBehaviour
     [SerializeField] private Material[] SolidMaterials;
     [SerializeField] private Material[] FadeMaterials;
 
+    private static Dictionary<string, Material> CachedMaterials = new Dictionary<string, Material>();
+
     private MeshRenderer renderer;
     private bool rendered;
     private float currentFade;
-  
+
 
     // Use this for initialization
     void Start()
@@ -23,6 +26,8 @@ public class ObjectFade : MonoBehaviour
 
     public void SetFade(float fade)
     {
+        fade = (float)Math.Round(fade, 1);
+
         if (!this.gameObject.activeInHierarchy) return;
         if (fade.Equals(currentFade)) return;
 
@@ -49,15 +54,27 @@ public class ObjectFade : MonoBehaviour
         if (fade == 1)
         {
             if (!renderer.material.Equals(SolidMaterials)) renderer.materials = SolidMaterials;
-           
+
             return;
         }
         if (!renderer.material.Equals(FadeMaterials)) renderer.materials = FadeMaterials;
 
-        foreach (Material material in renderer.materials)
+        for(int i =0; i < renderer.materials.Length;i++)
         {
-            Color color = new Color(material.color.r, material.color.g, material.color.b, fade);
-            material.color = color;
+            Material material = renderer.materials[i];
+            string name = material.name + fade;
+
+            if (CachedMaterials.ContainsKey(name))
+            {
+                renderer.materials[i] = CachedMaterials[name];
+            }
+            else
+            {
+                Color color = new Color(material.color.r, material.color.g, material.color.b, fade);
+                material.color = color;
+                CachedMaterials.Add(name, material);
+            }
+
         }
     }
 }

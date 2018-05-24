@@ -7,13 +7,14 @@ namespace Assets.Scripts.Level
 {
     public class HexLocation
     {
-        public int Q { get; private set; }
-        public int R { get; private set; }
-
-        public HexLocation(int q, int r)
+        public int X { get; private set; }
+        public int Y { get; private set; }
+        public int Z { get; private set; }
+        public HexLocation(int x, int y, int z)
         {
-            this.Q = q;
-            this.R = r;
+            this.X = x;
+            this.Y = y;
+            this.Z = z;
         }
 
         public override bool Equals(object obj)
@@ -28,18 +29,19 @@ namespace Assets.Scripts.Level
         public override int GetHashCode()
         {
             var hashCode = -1997189103;
-            hashCode = hashCode * -1521134295 + Q.GetHashCode();
-            hashCode = hashCode * -1521134295 + R.GetHashCode();
+            hashCode = hashCode * -1521134295 + X.GetHashCode();
+            hashCode = hashCode * -1521134295 + Y.GetHashCode();
+            hashCode = hashCode * -1521134295 + Z.GetHashCode();
             return hashCode;
         }
 
         public static bool operator ==(HexLocation h1, HexLocation h2)
         {
-            return (h1.Q == h2.Q && h1.R == h2.R);
+            return (h1.X == h2.X && h1.Y == h2.Y && h1.Z == h2.Z);
         }
         public static bool operator !=(HexLocation h1, HexLocation h2)
         {
-            return (h1.Q != h2.Q || h1.R != h2.R);
+            return (h1.X != h2.X || h1.Y != h2.Y || h1.Z != h2.Z);
         }
     }
 }

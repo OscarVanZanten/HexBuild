@@ -12,6 +12,10 @@ public class Grid : MonoBehaviour
     [SerializeField] private int RenderRadius;
     [SerializeField] private float RenderDistance;
     [SerializeField] private float FadeStartDistance;
+    [SerializeField] private float UpdateRate;
+    [SerializeField] private int UpdateAmount;
+    private int index;
+    private float UpdateDelta;
     private bool cleared = false;
 
     [Header("Level Generation")]
@@ -49,7 +53,13 @@ public class Grid : MonoBehaviour
             ClearPlots();
             cleared = true;
         }
-        UpdateDrawnPlots();
+
+        UpdateDelta += Time.deltaTime;
+        if (UpdateDelta > UpdateRate)
+        {
+            UpdateDelta -= UpdateRate;
+            UpdateDrawnPlots();
+        }
     }
 
     private void ClearPlots()
@@ -70,7 +80,7 @@ public class Grid : MonoBehaviour
             {
                 if (!renderedPlots.Contains(p) && !p.Equals(plot))
                 {
-                    p.UpdateFade(0);
+                    //p.UpdateFade(0);
                     p.ToggleHex(false);
                 }
             }
@@ -92,20 +102,8 @@ public class Grid : MonoBehaviour
                 {
                     float dist = (Camera.main.transform.position - p.transform.position).magnitude;
 
-                    if (dist >= RenderDistance)
-                    {
-                        p.UpdateFade(0);
-                        p.ToggleHex(false);
-                    }
-                    else if (dist > FadeStartDistance && dist < RenderDistance)
-                    {
-                        p.UpdateFade(1 - (dist - FadeStartDistance) / (RenderDistance - FadeStartDistance));
-                        p.ToggleHex(true);
-                    }
-                    else
-                    {
-                        p.UpdateFade(1);
-                    }
+
+                    p.ToggleHex(dist <= RenderDistance-1);
                 }
             }
         }
@@ -156,7 +154,8 @@ public class Grid : MonoBehaviour
                         obj.transform.localPosition = new Vector3(xx * size, yy * size, zz * size);
 
                         Plot plot = obj.GetComponent<Plot>();
-                        plot.Location = new HexLocation(xx, zz);
+                        plot.Location = new HexLocation(xx,yy, zz);
+                      
                         plots.Add(plot.Location, plot);
                     }
                 }
@@ -170,7 +169,7 @@ public class Grid : MonoBehaviour
 
         foreach (Plot plot in plots.Values)
         {
-            int pos = (plot.Location.Q + radius) + (plot.Location.R + radius) * Diameter;
+            int pos = (plot.Location.X + radius) + (plot.Location.Y + radius) * Diameter;
             float height = Mathf.Pow((map[pos] + 1), heightAmplifier) + heightOffset;
 
             plot.Height = height;
@@ -237,9 +236,9 @@ public class Grid : MonoBehaviour
         }
     }
 
-    public Plot GetPlot(int q, int r)
+    public Plot GetPlot(int x, int y, int z)
     {
-        HexLocation location = new HexLocation(q, r);
+        HexLocation location = new HexLocation(x,y,z);
         Plot p = null;
         plots.TryGetValue(location, out p);
         return p;
@@ -257,24 +256,30 @@ public class Grid : MonoBehaviour
         return GetSurroundingPlots(1, loc);
     }
 
-    public List<Plot> GetSurroundingPlots(int q, int r)
+    public List<Plot> GetSurroundingPlots(int x, int y, int z)
     {
-        return GetSurroundingPlots(new HexLocation(q, r));
+        return GetSurroundingPlots(new HexLocation(x,y,z));
     }
 
     private List<Plot> GetSurroundingPlots(int radius, HexLocation loc)
     {
         List<Plot> p = new List<Plot>();
 
-        for (int qq = -RenderRadius; qq <= RenderRadius; qq++)
+        for (int xx = -RenderRadius; xx < RenderRadius; xx++)
         {
-            for (int rr = -RenderRadius; rr <= RenderRadius; rr++)
+            for (int yy = -RenderRadius; yy < RenderRadius; yy++)
             {
-                Plot plot = GetPlot(qq + loc.Q, rr + loc.R);
-                if (plot == null) continue;
-                if (plot.Location == loc) continue;
+                for (int zz = -RenderRadius; zz < RenderRadius; zz++)
+                {
+                    if (xx == 0 && yy == 0 && zz == 0) continue;
 
-                p.Add(plot);
+                    Plot plot = GetPlot(xx + loc.X, yy + loc.Y, zz + loc.Z);
+                    if (plot != null)
+                    {
+                        p.Add(plot);
+                        // if (plot.Location == loc) continue;
+                    }
+                }
             }
         }
         return p;

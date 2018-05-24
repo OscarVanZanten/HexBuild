@@ -54,18 +54,18 @@ public class Plot : MonoBehaviour
                     {
                         GameObject.Destroy(Top);
                     }
-                    GameObject g = GameObject.Instantiate(GrassTop);
-                    g.transform.parent = TopPosition;
-                    g.transform.localPosition = new Vector3();
+                    Top = GameObject.Instantiate(GrassTop);
+                    Top.transform.parent = TopPosition;
+                    Top.transform.localPosition = new Vector3();
                     break;
                 case PlotType.Water:
                     if (Top != null)
                     {
                         GameObject.Destroy(Top);
                     }
-                    GameObject water = GameObject.Instantiate(WaterTop);
-                    water.transform.parent = TopPosition;
-                    water.transform.localPosition = new Vector3();
+                    Top = GameObject.Instantiate(WaterTop);
+                    Top.transform.parent = TopPosition;
+                    Top.transform.localPosition = new Vector3();
                     break;
             }
         }
@@ -120,7 +120,16 @@ public class Plot : MonoBehaviour
 
     public void ToggleHex(bool enable)
     {
-        Hexagon.SetActive(enable);
+
+       // Debug.Log(enable);
+        if (Hexagon.activeSelf != enable)
+        {
+            Hexagon.SetActive(enable);
+        }
+        if (ResourcesPosition.gameObject.activeSelf != enable)
+        {
+            ResourcesPosition.gameObject.SetActive(enable);
+        }
     }
 
     public void UpdateFade(float fade)
