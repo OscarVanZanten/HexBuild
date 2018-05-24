@@ -36,7 +36,6 @@ GameObject:
   - component: {fileID: 4536545752181828}
   - component: {fileID: 33300962253161778}
   - component: {fileID: 23769941653315356}
-  - component: {fileID: 64837679603838218}
   - component: {fileID: 114325307916716992}
   m_Layer: 0
   m_Name: Tree_Spruce_Leave_4
@@ -55,7 +54,6 @@ GameObject:
   - component: {fileID: 4961213320056928}
   - component: {fileID: 33464622919563076}
   - component: {fileID: 23829420339995564}
-  - component: {fileID: 64972618690852630}
   - component: {fileID: 114005726321959666}
   m_Layer: 0
   m_Name: Tree_Spruce_Trunk
@@ -74,7 +72,6 @@ GameObject:
   - component: {fileID: 4291064250198582}
   - component: {fileID: 33531319628412810}
   - component: {fileID: 23417123473436372}
-  - component: {fileID: 64823419590302444}
   - component: {fileID: 114901567962540368}
   m_Layer: 0
   m_Name: Tree_Spruce_Leave_2
@@ -93,7 +90,6 @@ GameObject:
   - component: {fileID: 4777443891033438}
   - component: {fileID: 33258942778811464}
   - component: {fileID: 23370842317818170}
-  - component: {fileID: 64601160993829494}
   - component: {fileID: 114745444673575984}
   m_Layer: 0
   m_Name: Tree_Spruce_Leave_3
@@ -112,7 +108,6 @@ GameObject:
   - component: {fileID: 4629113452590294}
   - component: {fileID: 33973863267038200}
   - component: {fileID: 23363967882791476}
-  - component: {fileID: 64092592122928308}
   - component: {fileID: 114085117944075968}
   m_Layer: 0
   m_Name: Tree_Spruce_Leave_1
@@ -409,76 +404,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1957818684548694}
   m_Mesh: {fileID: 4300000, guid: e500469b40059fc46938108b93dc9c59, type: 3}
---- !u!64 &64092592122928308
-MeshCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1957818684548694}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Convex: 0
-  m_InflateMesh: 0
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 4300000, guid: e500469b40059fc46938108b93dc9c59, type: 3}
---- !u!64 &64601160993829494
-MeshCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1669414041778690}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Convex: 0
-  m_InflateMesh: 0
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 4300008, guid: e500469b40059fc46938108b93dc9c59, type: 3}
---- !u!64 &64823419590302444
-MeshCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1542542166755852}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Convex: 0
-  m_InflateMesh: 0
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 4300002, guid: e500469b40059fc46938108b93dc9c59, type: 3}
---- !u!64 &64837679603838218
-MeshCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1394694733485692}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Convex: 0
-  m_InflateMesh: 0
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 4300006, guid: e500469b40059fc46938108b93dc9c59, type: 3}
---- !u!64 &64972618690852630
-MeshCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1528160606251234}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Convex: 0
-  m_InflateMesh: 0
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 4300004, guid: e500469b40059fc46938108b93dc9c59, type: 3}
 --- !u!114 &114005726321959666
 MonoBehaviour:
   m_ObjectHideFlags: 1

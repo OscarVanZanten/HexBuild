@@ -197,6 +197,10 @@ public class Grid : MonoBehaviour
                     plot.Height = higher.Height;
                 }
             }
+            else
+            {
+                plot.Type = PlotType.Ground;
+            }
         }
     }
 

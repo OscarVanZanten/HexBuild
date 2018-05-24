@@ -20,10 +20,13 @@ public class Plot : MonoBehaviour
     [SerializeField] private float DirtPercentage;
 
     [Header("Top Layers")]
-    [SerializeField] private Transform BuildingPosition;
-    [SerializeField] private Transform ResourcesPosition;
+    [SerializeField] private Transform TopPosition;
     [SerializeField] private GameObject GrassTop;
     [SerializeField] private GameObject WaterTop;
+    private GameObject Top;
+
+    [SerializeField] private Transform BuildingPosition;
+    [SerializeField] private Transform ResourcesPosition;
 
     [Header("Resources")]
     [SerializeField] private GameObject TreePrefab;
@@ -47,12 +50,22 @@ public class Plot : MonoBehaviour
             switch (type)
             {
                 case PlotType.Ground:
-                    GrassTop.SetActive(true);
-                    WaterTop.SetActive(false);
+                    if (Top != null)
+                    {
+                        GameObject.Destroy(Top);
+                    }
+                    GameObject g = GameObject.Instantiate(GrassTop);
+                    g.transform.parent = TopPosition;
+                    g.transform.localPosition = new Vector3();
                     break;
                 case PlotType.Water:
-                    GrassTop.SetActive(false);
-                    WaterTop.SetActive(true);
+                    if (Top != null)
+                    {
+                        GameObject.Destroy(Top);
+                    }
+                    GameObject water = GameObject.Instantiate(WaterTop);
+                    water.transform.parent = TopPosition;
+                    water.transform.localPosition = new Vector3();
                     break;
             }
         }
