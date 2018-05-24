@@ -10,8 +10,7 @@ public enum PlotType { Ground, Water }
 public class Plot : MonoBehaviour
 {
     [Header("Optimization")]
-    [SerializeField] private float RenderDistance;
-    [SerializeField] private float FadeStartDistance;
+   
     [SerializeField] private GameObject Hexagon;
     private bool IsSolid { get; set; }
 
@@ -106,40 +105,12 @@ public class Plot : MonoBehaviour
         FadeObject = GetComponentsInChildren<ObjectFade>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ToggleHex(bool enable)
     {
-        float dist = GetDistanceFromCamera();
-
-        if (dist >= RenderDistance)
-        {
-            FadeRenders(0);
-            if(Hexagon.activeSelf) Hexagon.SetActive(false);
-            return;
-        }
-        else if (dist > FadeStartDistance && dist < RenderDistance)
-        {
-            FadeRenders(1 - (dist - FadeStartDistance) / (RenderDistance - FadeStartDistance));
-            if (!Hexagon.activeSelf) Hexagon.SetActive(true);
-            return;
-        }
-        else
-        {
-            FadeRenders(1);
-            return;
-        }
+        Hexagon.SetActive(enable);
     }
 
-    private float GetDistanceFromCamera()
-    {
-        //Vector2 camPos = new Vector2(Camera.main.transform.position.x, Camera.main.transform.position.z);
-        //Vector2 currentPos = new Vector2(transform.position.x, transform.position.z);
-        return (Camera.main.transform.position - transform.position).magnitude;
-        //return (camPos - currentPos).magnitude;
-    }
-
-
-    private void FadeRenders(float fade)
+    public void UpdateFade(float fade)
     {
         if (fade == 1 && IsSolid) return;
         if (fade == 1) IsSolid = true;

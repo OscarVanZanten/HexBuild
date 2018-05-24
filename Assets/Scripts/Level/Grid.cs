@@ -8,6 +8,12 @@ using UnityEngine;
 
 public class Grid : MonoBehaviour
 {
+    [Header("Optimization")]
+    [SerializeField] private int RenderRadius;
+    [SerializeField] private float RenderDistance;
+    [SerializeField] private float FadeStartDistance;
+    private bool cleared = false;
+
     [Header("Level Generation")]
     [SerializeField] private GameObject plotPrefab;
     [SerializeField] private Transform terrain;
@@ -20,24 +26,89 @@ public class Grid : MonoBehaviour
     [SerializeField] private float SeaLevel;
     [SerializeField] private int MinAmountTrees;
     [SerializeField] private int MaxAmountTrees;
+
     [Header("Buildings")]
     [SerializeField] private GameObject FisherHouse;
 
     private int Diameter { get { return radius * 2 + 1; } }
 
-    private List<Plot> plots;
+    private Dictionary<HexLocation, Plot> plots;
 
     // Use this for initialization
     void Start()
     {
-        float seed = Mathf.Min((float)NoiseMapGenerator.Random.NextDouble() +0.25f, 1);
+        float seed = Mathf.Min((float)NoiseMapGenerator.Random.NextDouble() + 0.25f, 1);
         Generate(seed);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!cleared)
+        {
+            ClearPlots();
+            cleared = true;
+        }
+        UpdateDrawnPlots();
+    }
 
+    private void ClearPlots()
+    {
+        RaycastHit hitUp;
+        if (Physics.Raycast(Camera.main.transform.position, Vector3.down, out hitUp))
+        {
+            Plot plot = hitUp.transform.gameObject.GetComponentInParent<Plot>();
+
+            if (plot == null)
+            {
+                throw new UnityException("Not above a tile to clear the level");
+            }
+
+            List<Plot> renderedPlots = GetSurroundingPlots(RenderRadius-1, plot.Location);
+
+            foreach (Plot p in plots.Values)
+            {
+                if (!renderedPlots.Contains(p) && !p.Equals(plot))
+                {
+                    p.UpdateFade(0);
+                    p.ToggleHex(false);
+                }
+            }
+        }
+    }
+
+    private void UpdateDrawnPlots()
+    {
+        RaycastHit hitUp;
+        if (Physics.Raycast(Camera.main.transform.position, Vector3.down, out hitUp))
+        {
+            Plot plot = hitUp.transform.gameObject.GetComponentInParent<Plot>();
+
+            if (plot != null)
+            {
+                List<Plot> pl = GetSurroundingPlots(RenderRadius, plot.Location);
+
+                foreach (Plot p in pl)
+                {
+                    float dist = (Camera.main.transform.position - p.transform.position).magnitude;
+
+                    if (dist >= RenderDistance)
+                    {
+                        p.UpdateFade(0);
+                        p.ToggleHex(false);
+                    }
+                    else if (dist > FadeStartDistance && dist < RenderDistance)
+                    {
+                        p.UpdateFade(1 - (dist - FadeStartDistance) / (RenderDistance - FadeStartDistance));
+                        p.ToggleHex(true);
+                    }
+                    else
+                    {
+                        p.UpdateFade(1);
+                    }
+                }
+            }
+        }
     }
 
     private void Generate(float seed)
@@ -56,14 +127,14 @@ public class Grid : MonoBehaviour
         GenerateTrees();
 
         //Generate Buildings
-      //  GenerateFisher();
+        //  GenerateFisher();
     }
 
 
 
     private void GeneratePlots()
     {
-        plots = new List<Plot>();
+        plots = new Dictionary<HexLocation, Plot>();
 
         for (int x = 0; x < Diameter; x++)
         {
@@ -82,12 +153,11 @@ public class Grid : MonoBehaviour
                         float zzz = zz * ((zz % 2 == 0) ? 1 : 1.5f);
                         GameObject obj = GameObject.Instantiate(plotPrefab);
                         obj.transform.parent = terrain;
-                        obj.transform.localPosition = new Vector3(xx * size, yy  * size, zz  * size);
+                        obj.transform.localPosition = new Vector3(xx * size, yy * size, zz * size);
 
                         Plot plot = obj.GetComponent<Plot>();
                         plot.Location = new HexLocation(xx, zz);
-
-                        plots.Add(plot);
+                        plots.Add(plot.Location, plot);
                     }
                 }
             }
@@ -98,7 +168,7 @@ public class Grid : MonoBehaviour
     {
         float[] map = NoiseMapGenerator.GeneratePerlinNoice(Diameter, Diameter, (float)seed, scale);
 
-        foreach (Plot plot in plots)
+        foreach (Plot plot in plots.Values)
         {
             int pos = (plot.Location.Q + radius) + (plot.Location.R + radius) * Diameter;
             float height = Mathf.Pow((map[pos] + 1), heightAmplifier) + heightOffset;
@@ -109,7 +179,7 @@ public class Grid : MonoBehaviour
 
     private void GenerateLakes()
     {
-        foreach (Plot plot in plots)
+        foreach (Plot plot in plots.Values)
         {
             if (plot.Height <= SeaLevel)
             {
@@ -132,7 +202,7 @@ public class Grid : MonoBehaviour
 
     private void GenerateTrees()
     {
-        foreach (Plot plot in plots)
+        foreach (Plot plot in plots.Values)
         {
             if (plot.Height <= TreeLine && plot.Type == PlotType.Ground)
             {
@@ -145,7 +215,7 @@ public class Grid : MonoBehaviour
 
     private void GenerateFisher()
     {
-        foreach (Plot plot in plots)
+        foreach (Plot plot in plots.Values)
         {
             if (plot.Type != PlotType.Ground) continue;
 
@@ -165,36 +235,44 @@ public class Grid : MonoBehaviour
 
     public Plot GetPlot(int q, int r)
     {
-        return plots.Where(p => p.Location.Q == q && p.Location.R == r).FirstOrDefault();
+        HexLocation location = new HexLocation(q, r);
+        Plot p = null;
+        plots.TryGetValue(location, out p);
+        return p;
     }
 
     public Plot GetPlot(HexLocation pos)
     {
-        return GetPlot((int)pos.Q, (int)pos.R);
+        Plot p = null;
+        plots.TryGetValue(pos, out p);
+        return p;
     }
 
     public List<Plot> GetSurroundingPlots(HexLocation loc)
     {
-        return GetSurroundingPlots(loc.Q, loc.R);
+        return GetSurroundingPlots(1, loc);
     }
 
     public List<Plot> GetSurroundingPlots(int q, int r)
     {
-        List<Plot> plots = new List<Plot>();
+        return GetSurroundingPlots(new HexLocation(q, r));
+    }
 
-        Plot p1 = GetPlot(q, r - 1);
-        Plot p2 = GetPlot(q - 1, r);
-        Plot p3 = GetPlot(q - 1, r + 1);
-        Plot p4 = GetPlot(q, r + 1);
-        Plot p5 = GetPlot(q + 1, r);
-        Plot p6 = GetPlot(q + 1, r - 1);
-        if (p1 != null) plots.Add(p1);
-        if (p2 != null) plots.Add(p2);
-        if (p3 != null) plots.Add(p3);
-        if (p4 != null) plots.Add(p4);
-        if (p5 != null) plots.Add(p5);
-        if (p6 != null) plots.Add(p6);
+    private List<Plot> GetSurroundingPlots(int radius, HexLocation loc)
+    {
+        List<Plot> p = new List<Plot>();
 
-        return plots;
+        for (int qq = -RenderRadius; qq <= RenderRadius; qq++)
+        {
+            for (int rr = -RenderRadius; rr <= RenderRadius; rr++)
+            {
+                Plot plot = GetPlot(qq + loc.Q, rr + loc.R);
+                if (plot == null) continue;
+                if (plot.Location == loc) continue;
+
+                p.Add(plot);
+            }
+        }
+        return p;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class FlyCamera : MonoBehaviour
 {
@@ -20,15 +21,10 @@ public class FlyCamera : MonoBehaviour
 
     }
 
-    // Update is called once per frame
+    // LateUpdate is called every frame, if the Behaviour is enabled
     private void Update()
     {
-
-    }
-
-    // LateUpdate is called every frame, if the Behaviour is enabled
-    private void LateUpdate()
-    {
+       
         float x = Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
         float y = Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
 

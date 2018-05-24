@@ -710,10 +710,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d490298dea94d64d9ba77dba0f32b0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RenderDistance: 150
-  FadeStartDistance: 147
+  RenderDistance: 100
+  FadeStartDistance: 90
   Hexagon: {fileID: 1911000994835910}
-  UpdateRate: 0
   StoneLayer: {fileID: 4817622292920910}
   DirtLayer: {fileID: 4907062790521564}
   DirtPercentage: 0.1
