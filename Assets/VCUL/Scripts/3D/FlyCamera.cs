@@ -10,9 +10,9 @@ public class FlyCamera : MonoBehaviour
     public float normalMoveSpeed = 10f;
     public float maxHeight = 100;
     public float groundOFfset = 10;
-    public Vector2 rotationLimitVertical;
     public float HeightOffset = 30;
     public float MaxAngle = 45;
+    public float AngleLimit = 90;
 
     private float speedScale { get { return transform.position.y / maxHeight; } }
     public Transform Camera;
@@ -35,7 +35,7 @@ public class FlyCamera : MonoBehaviour
 
             transform.Rotate(Vector3.up, x, Space.Self);
         }
-        float angle = transform.position.y > HeightOffset ? 90 : MaxAngle+ (Mathf.Min(HeightOffset, transform.position.y) / HeightOffset * (90- MaxAngle));
+        float angle = transform.position.y > HeightOffset ? AngleLimit : MaxAngle + (Mathf.Min(HeightOffset, transform.position.y) / HeightOffset * (AngleLimit - MaxAngle));
         Camera.transform.localRotation = Quaternion.Euler(angle, 0, 0);
 
 

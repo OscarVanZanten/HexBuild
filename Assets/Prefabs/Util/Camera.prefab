@@ -130,9 +130,9 @@ MonoBehaviour:
   normalMoveSpeed: 25
   maxHeight: 100
   groundOFfset: 10
-  rotationLimitVertical: {x: 0, y: 0}
   HeightOffset: 75
-  MaxAngle: 70
+  MaxAngle: 50
+  AngleLimit: 90
   Camera: {fileID: 4605540500531178}
 --- !u!124 &124641802069128922
 Behaviour:

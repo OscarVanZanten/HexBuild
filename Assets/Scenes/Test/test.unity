@@ -208,16 +208,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 114625604932744424, guid: 06b6b86c8c7ba904986e8999b3eafd9d,
-        type: 2}
-      propertyPath: HeightOffset
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 114625604932744424, guid: 06b6b86c8c7ba904986e8999b3eafd9d,
-        type: 2}
-      propertyPath: MaxAngle
-      value: 60
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 06b6b86c8c7ba904986e8999b3eafd9d, type: 2}
   m_IsPrefabParent: 0
