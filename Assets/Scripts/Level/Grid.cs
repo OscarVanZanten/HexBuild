@@ -14,6 +14,7 @@ public class Grid : MonoBehaviour
     private float RenderDistance { get { return (RenderRadius - 5) * size * (float)Math.Sqrt(2); } }
     [Tooltip("Amount of graphical level updates per second")]
     [SerializeField] private float UpdateRate;
+    [Tooltip("Amount of graphical level updates update cycle")]
     [SerializeField] private int UpdateAmount;
     private int CurrentX, CurrentY, CurrentZ;
     private float PlotUpdateDelta;
