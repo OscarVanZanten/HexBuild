@@ -12,13 +12,11 @@ public class Grid : MonoBehaviour
     [Tooltip("The max radius of tiles being rendered(1 tile = 1 unit)")]
     [SerializeField] private int RenderRadius;
     private float RenderDistance { get { return (RenderRadius - 5) * size * (float)Math.Sqrt(2); } }
-    [SerializeField] private float FadeDistanceStart;
     [Tooltip("Amount of graphical level updates per second")]
     [SerializeField] private float UpdateRate;
     [SerializeField] private int UpdateAmount;
-    private List<Plot> PlotUpdateList;
+    private int CurrentX, CurrentY, CurrentZ;
     private float PlotUpdateDelta;
-    private int CurrentPlotIndex;
     private bool PlotsCleared = false;
 
     [Header("Level Generation")]
@@ -43,6 +41,9 @@ public class Grid : MonoBehaviour
     void Start()
     {
         float seed = Mathf.Min((float)NoiseMapGenerator.Random.NextDouble() + 0.33f, 1);
+        CurrentX = -RenderRadius;
+        CurrentZ = -RenderRadius;
+        CurrentY = -RenderRadius;
         Generate(seed);
     }
 
@@ -55,6 +56,7 @@ public class Grid : MonoBehaviour
             PlotsCleared = true;
         }
         UpdatePlots();
+
     }
 
     private void UpdatePlots()
@@ -63,24 +65,45 @@ public class Grid : MonoBehaviour
         while (PlotUpdateDelta > 1 / UpdateRate)
         {
             PlotUpdateDelta -= 1 / UpdateRate;
-            //UpdateDrawnPlots();
-            if (PlotUpdateList == null)
-            {
-                PlotUpdateList = GetPlotsSurroundingCamera(RenderRadius);
-                return;
-            }
 
-            for (int i = 0; i < UpdateAmount; i++)
+            for (int i = 0; i < UpdateAmount;)
             {
-                CurrentPlotIndex++;
-                if (CurrentPlotIndex != PlotUpdateList.Count)
+                if (CurrentX < RenderRadius)
                 {
-                    UpdatePlot(PlotUpdateList[CurrentPlotIndex]);
+                    CurrentX++;
                 }
-                else
+
+                if (CurrentX == RenderRadius)
                 {
-                    PlotUpdateList = GetPlotsSurroundingCamera(RenderRadius);
-                    CurrentPlotIndex = 0;
+                    CurrentY++;
+                    CurrentX = -RenderRadius;
+                }
+                if (CurrentY == RenderRadius)
+                {
+                    CurrentZ++;
+                    CurrentY = -RenderRadius;
+                }
+
+                if (CurrentZ == RenderRadius)
+                {
+                    CurrentX = -RenderRadius;
+                    CurrentZ = -RenderRadius;
+                    CurrentY = -RenderRadius;
+                }
+
+               //Debug.Log("X: " + CurrentX + " Y:" + CurrentY + " Z: " + CurrentZ);
+                if (CurrentX + CurrentY + CurrentZ == 0)
+                {
+                    Plot camplot = GetCurrentCameraPlot();
+                    if (camplot == null) return;
+
+                    Plot plot = GetPlot(camplot.Location.X  + CurrentX, camplot.Location.Y + CurrentY, camplot.Location.Z + CurrentZ);
+
+                    if (plot != null)
+                    {
+                        i++;
+                        UpdatePlot(plot);
+                    }
                 }
             }
         }
@@ -109,11 +132,15 @@ public class Grid : MonoBehaviour
     private void UpdatePlot(Plot p)
     {
         Vector2 cam = new Vector2(Camera.main.transform.position.x - p.transform.position.x, Camera.main.transform.position.z - p.transform.position.z);
-
         float dist = cam.magnitude;
+        p.ToggleHex(dist <= RenderDistance);
+    }
 
-        p.ToggleHex(dist <= RenderDistance );
-        //  p.UpdateFade(Mathf.Min(dist / FadeStartDistance, 1));
+    private void LookAtPlot(Plot plot)
+    {
+        Vector3 plotLoc = new Vector3(plot.transform.position.x, Camera.main.transform.position.y, plot.transform.position.z);
+        Camera.main.transform.position = plotLoc;
+        ClearPlots();
     }
 
     private void Generate(float seed)
@@ -268,11 +295,11 @@ public class Grid : MonoBehaviour
     {
         List<Plot> p = new List<Plot>();
 
-        for (int xx = -RenderRadius; xx < RenderRadius; xx++)
+        for (int xx = -radius; xx < radius; xx++)
         {
-            for (int yy = -RenderRadius; yy < RenderRadius; yy++)
+            for (int yy = -radius; yy < radius; yy++)
             {
-                for (int zz = -RenderRadius; zz < RenderRadius; zz++)
+                for (int zz = -radius; zz < radius; zz++)
                 {
                     Plot plot = GetPlot(xx + loc.X, yy + loc.Y, zz + loc.Z);
                     if (plot != null)
@@ -309,32 +336,36 @@ public class Grid : MonoBehaviour
         return p;
     }
 
-    private List<Plot> GetPlotRingCamera(int radius, int innerRadius)
+    private Plot GetCurrentCameraPlot()
     {
         RaycastHit hitUp;
         if (Physics.Raycast(Camera.main.transform.position, Vector3.down, out hitUp))
         {
             Plot plot = hitUp.transform.gameObject.GetComponentInParent<Plot>();
 
-            if (plot != null)
-            {
-                return GetPlotsRing(RenderRadius, innerRadius, plot.Location);
-            }
+            return plot;
+        }
+        return null;
+    }
+
+    private List<Plot> GetPlotRingCamera(int radius, int innerRadius)
+    {
+        Plot plot = GetCurrentCameraPlot();
+
+        if (plot != null)
+        {
+            return GetPlotsRing(radius, innerRadius, plot.Location);
         }
         return null;
     }
 
     private List<Plot> GetPlotsSurroundingCamera(int radius)
     {
-        RaycastHit hitUp;
-        if (Physics.Raycast(Camera.main.transform.position, Vector3.down, out hitUp))
-        {
-            Plot plot = hitUp.transform.gameObject.GetComponentInParent<Plot>();
+        Plot plot = GetCurrentCameraPlot();
 
-            if (plot != null)
-            {
-                return GetSurroundingPlots(RenderRadius, plot.Location);
-            }
+        if (plot != null)
+        {
+            return GetSurroundingPlots(radius, plot.Location);
         }
         return null;
     }

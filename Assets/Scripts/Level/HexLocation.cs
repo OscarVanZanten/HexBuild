@@ -43,5 +43,10 @@ namespace Assets.Scripts.Level
         {
             return (h1.X != h2.X || h1.Y != h2.Y || h1.Z != h2.Z);
         }
+
+        public override string ToString()
+        {
+            return "HexLocation{X: " + X + " Y:" + Y + " Z: " + Z + "}";
+        }
     }
 }
