@@ -54,7 +54,11 @@ public class Grid : MonoBehaviour
             ClearPlots();
             PlotsCleared = true;
         }
+        UpdatePlots();
+    }
 
+    private void UpdatePlots()
+    {
         PlotUpdateDelta += Time.deltaTime;
         while (PlotUpdateDelta > 1 / UpdateRate)
         {
@@ -79,7 +83,6 @@ public class Grid : MonoBehaviour
                     CurrentPlotIndex = 0;
                 }
             }
-
         }
     }
 
@@ -131,8 +134,6 @@ public class Grid : MonoBehaviour
         //Generate Buildings
         //  GenerateFisher();
     }
-
-
 
     private void GeneratePlots()
     {

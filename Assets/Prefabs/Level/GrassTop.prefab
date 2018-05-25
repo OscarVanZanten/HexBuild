@@ -36,7 +36,6 @@ GameObject:
   - component: {fileID: 4471523340106672}
   - component: {fileID: 33344681939296888}
   - component: {fileID: 23785357679986760}
-  - component: {fileID: 114618715026345586}
   m_Layer: 0
   m_Name: Hexagon_Dirt_Top
   m_TagString: Untagged
@@ -54,7 +53,6 @@ GameObject:
   - component: {fileID: 4006230039306260}
   - component: {fileID: 33233347782553470}
   - component: {fileID: 23469107114481298}
-  - component: {fileID: 114775613797932992}
   m_Layer: 0
   m_Name: Hexagon_Grass_Top
   m_TagString: Untagged
@@ -95,7 +93,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1193557206932794}
   m_LocalRotation: {x: -0, y: 0.2588191, z: -0, w: 0.9659258}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -179.98294, y: 144.06407, z: 157.57019}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4471523340106672}
@@ -117,7 +115,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: f88c98c6614d17745b992110125ac1b9, type: 2}
+  - {fileID: 2100000, guid: d9ce6f576b4ce2248960360fb24dd66a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -151,7 +149,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 1409652e5e288dd4386dd3a7b303a595, type: 2}
+  - {fileID: 2100000, guid: 4ddad5ba53599ea429bc3b84661c4096, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -185,33 +183,3 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1478349594986018}
   m_Mesh: {fileID: 4300002, guid: 5a779edc63b0bcb44957f478adb47bd4, type: 3}
---- !u!114 &114618715026345586
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1478349594986018}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a079e0bd5b60fc54dad34caaa57aba35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SolidMaterials:
-  - {fileID: 2100000, guid: 1409652e5e288dd4386dd3a7b303a595, type: 2}
-  FadeMaterials:
-  - {fileID: 2100000, guid: 438175a4c0fb72e4d8237fda650c8688, type: 2}
---- !u!114 &114775613797932992
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1813333474774804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a079e0bd5b60fc54dad34caaa57aba35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SolidMaterials:
-  - {fileID: 2100000, guid: f88c98c6614d17745b992110125ac1b9, type: 2}
-  FadeMaterials:
-  - {fileID: 2100000, guid: 530cf96b80e2b5845af450aab69cc812, type: 2}

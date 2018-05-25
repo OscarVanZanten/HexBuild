@@ -51,7 +51,6 @@ GameObject:
   - component: {fileID: 4817622292920910}
   - component: {fileID: 33452972960332882}
   - component: {fileID: 23165819147150008}
-  - component: {fileID: 114818370763778340}
   m_Layer: 0
   m_Name: Hexagon_Stone
   m_TagString: Untagged
@@ -84,7 +83,6 @@ GameObject:
   - component: {fileID: 4907062790521564}
   - component: {fileID: 33658118276220746}
   - component: {fileID: 23612223938852182}
-  - component: {fileID: 114729945998622476}
   m_Layer: 0
   m_Name: Hexagon_Dirt_Bottom
   m_TagString: Untagged
@@ -293,7 +291,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 0a37d1deb8f460743ae52def6081ded8, type: 2}
+  - {fileID: 2100000, guid: 23c465dbc05a80b4eb62194058c3c77e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -327,7 +325,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 1409652e5e288dd4386dd3a7b303a595, type: 2}
+  - {fileID: 2100000, guid: 4ddad5ba53599ea429bc3b84661c4096, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -396,33 +394,3 @@ MonoBehaviour:
   TreePrefab: {fileID: 1195217210207260, guid: eaa30744737b7524eb9998ca61fd1a4f, type: 2}
   MinScaleTree: 0.33
   MaxScaleTree: 0.6
---- !u!114 &114729945998622476
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1520886023347184}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a079e0bd5b60fc54dad34caaa57aba35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SolidMaterials:
-  - {fileID: 2100000, guid: 1409652e5e288dd4386dd3a7b303a595, type: 2}
-  FadeMaterials:
-  - {fileID: 2100000, guid: 438175a4c0fb72e4d8237fda650c8688, type: 2}
---- !u!114 &114818370763778340
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1394690371268328}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a079e0bd5b60fc54dad34caaa57aba35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SolidMaterials:
-  - {fileID: 2100000, guid: 0a37d1deb8f460743ae52def6081ded8, type: 2}
-  FadeMaterials:
-  - {fileID: 2100000, guid: 5440a97c2a44b5845bcbb5013d7fee4d, type: 2}

@@ -36,7 +36,6 @@ GameObject:
   - component: {fileID: 4536545752181828}
   - component: {fileID: 33300962253161778}
   - component: {fileID: 23769941653315356}
-  - component: {fileID: 114325307916716992}
   m_Layer: 0
   m_Name: Tree_Spruce_Leave_4
   m_TagString: Untagged
@@ -54,7 +53,6 @@ GameObject:
   - component: {fileID: 4961213320056928}
   - component: {fileID: 33464622919563076}
   - component: {fileID: 23829420339995564}
-  - component: {fileID: 114005726321959666}
   m_Layer: 0
   m_Name: Tree_Spruce_Trunk
   m_TagString: Untagged
@@ -72,7 +70,6 @@ GameObject:
   - component: {fileID: 4291064250198582}
   - component: {fileID: 33531319628412810}
   - component: {fileID: 23417123473436372}
-  - component: {fileID: 114901567962540368}
   m_Layer: 0
   m_Name: Tree_Spruce_Leave_2
   m_TagString: Untagged
@@ -90,7 +87,6 @@ GameObject:
   - component: {fileID: 4777443891033438}
   - component: {fileID: 33258942778811464}
   - component: {fileID: 23370842317818170}
-  - component: {fileID: 114745444673575984}
   m_Layer: 0
   m_Name: Tree_Spruce_Leave_3
   m_TagString: Untagged
@@ -108,7 +104,6 @@ GameObject:
   - component: {fileID: 4629113452590294}
   - component: {fileID: 33973863267038200}
   - component: {fileID: 23363967882791476}
-  - component: {fileID: 114085117944075968}
   m_Layer: 0
   m_Name: Tree_Spruce_Leave_1
   m_TagString: Untagged
@@ -136,7 +131,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1291462153365142}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -221.4248, y: 203.90753, z: -325.89737}
+  m_LocalPosition: {x: -162.39084, y: 152.42668, z: 153.45807}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4629113452590294}
@@ -213,7 +208,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 2372b4c59c01c2e4e9f104adbea69444, type: 2}
+  - {fileID: 2100000, guid: 421a714bbd23b0c42ac0071127f2fbde, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -247,7 +242,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 2372b4c59c01c2e4e9f104adbea69444, type: 2}
+  - {fileID: 2100000, guid: 421a714bbd23b0c42ac0071127f2fbde, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -281,7 +276,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 2372b4c59c01c2e4e9f104adbea69444, type: 2}
+  - {fileID: 2100000, guid: 421a714bbd23b0c42ac0071127f2fbde, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -315,7 +310,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 2372b4c59c01c2e4e9f104adbea69444, type: 2}
+  - {fileID: 2100000, guid: 421a714bbd23b0c42ac0071127f2fbde, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -349,7 +344,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: f6b3b735f67cc984e909718258475ece, type: 2}
+  - {fileID: 2100000, guid: 2bd19189d9c51ed408591b2ce9f8454a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -404,78 +399,3 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1957818684548694}
   m_Mesh: {fileID: 4300000, guid: e500469b40059fc46938108b93dc9c59, type: 3}
---- !u!114 &114005726321959666
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1528160606251234}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a079e0bd5b60fc54dad34caaa57aba35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SolidMaterials:
-  - {fileID: 2100000, guid: f6b3b735f67cc984e909718258475ece, type: 2}
-  FadeMaterials:
-  - {fileID: 2100000, guid: 0393a6dfdf1a01d41ba2c71b2775fa3b, type: 2}
---- !u!114 &114085117944075968
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1957818684548694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a079e0bd5b60fc54dad34caaa57aba35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SolidMaterials:
-  - {fileID: 2100000, guid: 2372b4c59c01c2e4e9f104adbea69444, type: 2}
-  FadeMaterials:
-  - {fileID: 2100000, guid: 7134170ac9f83234386c83a23ef9877f, type: 2}
---- !u!114 &114325307916716992
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1394694733485692}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a079e0bd5b60fc54dad34caaa57aba35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SolidMaterials:
-  - {fileID: 2100000, guid: 2372b4c59c01c2e4e9f104adbea69444, type: 2}
-  FadeMaterials:
-  - {fileID: 2100000, guid: 7134170ac9f83234386c83a23ef9877f, type: 2}
---- !u!114 &114745444673575984
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1669414041778690}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a079e0bd5b60fc54dad34caaa57aba35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SolidMaterials:
-  - {fileID: 2100000, guid: 2372b4c59c01c2e4e9f104adbea69444, type: 2}
-  FadeMaterials:
-  - {fileID: 2100000, guid: 7134170ac9f83234386c83a23ef9877f, type: 2}
---- !u!114 &114901567962540368
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1542542166755852}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a079e0bd5b60fc54dad34caaa57aba35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SolidMaterials:
-  - {fileID: 2100000, guid: 2372b4c59c01c2e4e9f104adbea69444, type: 2}
-  FadeMaterials:
-  - {fileID: 2100000, guid: 7134170ac9f83234386c83a23ef9877f, type: 2}

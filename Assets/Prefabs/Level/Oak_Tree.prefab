@@ -37,7 +37,6 @@ GameObject:
   - component: {fileID: 33005046682895322}
   - component: {fileID: 23529983963392314}
   - component: {fileID: 64466190511499852}
-  - component: {fileID: 114502095145625702}
   m_Layer: 0
   m_Name: Tree_Oak_Leave_1
   m_TagString: Untagged
@@ -56,7 +55,6 @@ GameObject:
   - component: {fileID: 33739384258656660}
   - component: {fileID: 23229629314491232}
   - component: {fileID: 64286190152062518}
-  - component: {fileID: 114087445338423592}
   m_Layer: 0
   m_Name: Tree_Oak_Trunk
   m_TagString: Untagged
@@ -75,7 +73,6 @@ GameObject:
   - component: {fileID: 33181409572439540}
   - component: {fileID: 23120943719934772}
   - component: {fileID: 64896497076297796}
-  - component: {fileID: 114946800728761240}
   m_Layer: 0
   m_Name: Tree_Oak_Leave_2
   m_TagString: Untagged
@@ -103,7 +100,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1195217210207260}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -215.0535, y: 205.93488, z: -337.16718}
+  m_LocalPosition: {x: -175.51964, y: 143.9812, z: 149.17517}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4796535939512024}
@@ -305,52 +302,3 @@ MeshCollider:
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300004, guid: cdad0ee1ce94c6e4bbd9c3241040fb37, type: 3}
---- !u!114 &114087445338423592
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1333641273772098}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a079e0bd5b60fc54dad34caaa57aba35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SolidMaterials:
-  - {fileID: 2100000, guid: 3131369c575c914469d792379cf1d2a3, type: 2}
-  FadeMaterials:
-  - {fileID: 2100000, guid: 67577b87b94116941918a2002b796224, type: 2}
---- !u!114 &114502095145625702
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1207922930404490}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a079e0bd5b60fc54dad34caaa57aba35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SolidMaterials:
-  - {fileID: 2100000, guid: c238f54e09ca39542bdcc818fefc56b0, type: 2}
-  - {fileID: 2100000, guid: b378f8fbde4e45149b8b45be19268820, type: 2}
-  FadeMaterials:
-  - {fileID: 2100000, guid: 529b723a96f1e774f9f75f2894382f9f, type: 2}
-  - {fileID: 2100000, guid: a06e2256603702948b1d79886ad4525a, type: 2}
---- !u!114 &114946800728761240
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1555219415233524}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a079e0bd5b60fc54dad34caaa57aba35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SolidMaterials:
-  - {fileID: 2100000, guid: c238f54e09ca39542bdcc818fefc56b0, type: 2}
-  - {fileID: 2100000, guid: b378f8fbde4e45149b8b45be19268820, type: 2}
-  FadeMaterials:
-  - {fileID: 2100000, guid: 529b723a96f1e774f9f75f2894382f9f, type: 2}
-  - {fileID: 2100000, guid: a06e2256603702948b1d79886ad4525a, type: 2}
