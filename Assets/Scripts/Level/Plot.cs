@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum PlotType { Ground, Water }
+public enum PlotType { Grass, Water, Sand }
 
 public class Plot : MonoBehaviour
 {
@@ -23,8 +23,10 @@ public class Plot : MonoBehaviour
     [SerializeField] private Transform TopPosition;
     [SerializeField] private GameObject GrassTop;
     [SerializeField] private GameObject WaterTop;
+    [SerializeField] private GameObject SandTop;
     private GameObject Top;
 
+    [Header("Positions")]
     [SerializeField] private Transform BuildingPosition;
     [SerializeField] private Transform ResourcesPosition;
 
@@ -37,7 +39,7 @@ public class Plot : MonoBehaviour
 
     private ObjectFade[] FadeObject;
 
-    private PlotType type = PlotType.Ground;
+    private PlotType type = PlotType.Grass;
     public PlotType Type
     {
         get
@@ -49,7 +51,7 @@ public class Plot : MonoBehaviour
             type = value;
             switch (type)
             {
-                case PlotType.Ground:
+                case PlotType.Grass:
                     if (Top != null)
                     {
                         GameObject.Destroy(Top);
@@ -64,6 +66,15 @@ public class Plot : MonoBehaviour
                         GameObject.Destroy(Top);
                     }
                     Top = GameObject.Instantiate(WaterTop);
+                    Top.transform.parent = TopPosition;
+                    Top.transform.localPosition = new Vector3();
+                    break;
+                case PlotType.Sand:
+                    if (Top != null)
+                    {
+                        GameObject.Destroy(Top);
+                    }
+                    Top = GameObject.Instantiate(SandTop);
                     Top.transform.parent = TopPosition;
                     Top.transform.localPosition = new Vector3();
                     break;

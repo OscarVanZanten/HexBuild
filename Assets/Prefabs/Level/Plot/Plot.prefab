@@ -187,7 +187,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1858701088794844}
   m_LocalRotation: {x: 0, y: 0.2588191, z: 0, w: 0.9659258}
-  m_LocalPosition: {x: -184.71619, y: 143.13666, z: 149.07283}
+  m_LocalPosition: {x: 87.23567, y: 91.99109, z: 283.18414}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4365541329711652}
@@ -389,6 +389,7 @@ MonoBehaviour:
   TopPosition: {fileID: 4675564553393504}
   GrassTop: {fileID: 1193557206932794, guid: 219bda5190be18044b2c0f80a47143b6, type: 2}
   WaterTop: {fileID: 1877802940545130, guid: 0a5af89ba42a8244098af3163f294985, type: 2}
+  SandTop: {fileID: 1193557206932794, guid: 035dc0551212a854395642f13fbbc8a9, type: 2}
   BuildingPosition: {fileID: 4111358465000700}
   ResourcesPosition: {fileID: 4739636913801638}
   TreePrefab: {fileID: 1195217210207260, guid: eaa30744737b7524eb9998ca61fd1a4f, type: 2}

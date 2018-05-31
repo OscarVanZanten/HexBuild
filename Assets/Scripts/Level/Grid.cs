@@ -32,6 +32,8 @@ public class Grid : MonoBehaviour
     [SerializeField] private float scale;
     [SerializeField] private float TreeLine;
     [SerializeField] private float SeaLevel;
+    [SerializeField] private float BeachLevel;
+    [SerializeField] private float BeachSize;
     [SerializeField] private int MinAmountTrees;
     [SerializeField] private int MaxAmountTrees;
     private Dictionary<HexLocation, Plot> plots;
@@ -94,13 +96,13 @@ public class Grid : MonoBehaviour
                     CurrentY = -RenderRadius;
                 }
 
-               //Debug.Log("X: " + CurrentX + " Y:" + CurrentY + " Z: " + CurrentZ);
+                //Debug.Log("X: " + CurrentX + " Y:" + CurrentY + " Z: " + CurrentZ);
                 if (CurrentX + CurrentY + CurrentZ == 0)
                 {
                     Plot camplot = GetCurrentCameraPlot();
                     if (camplot == null) return;
 
-                    Plot plot = GetPlot(camplot.Location.X  + CurrentX, camplot.Location.Y + CurrentY, camplot.Location.Z + CurrentZ);
+                    Plot plot = GetPlot(camplot.Location.X + CurrentX, camplot.Location.Y + CurrentY, camplot.Location.Z + CurrentZ);
 
                     if (plot != null)
                     {
@@ -158,6 +160,7 @@ public class Grid : MonoBehaviour
         GeneratePlots();
         GenerateHills(seed);
         GenerateLakes();
+        GenerateBeaches();
 
         //Resources
         GenerateTrees();
@@ -170,7 +173,7 @@ public class Grid : MonoBehaviour
     {
         float seascale = ((Diameter * size * Mathf.Sqrt(2)) / 10) + 10;
         SeaPlane.transform.localScale = new Vector3(seascale, 1, seascale);
-        SeaPlane.transform.Translate(new Vector3(0, SeaLevel-1, 0));
+        SeaPlane.transform.Translate(new Vector3(0, SeaLevel + 0.5f, 0));
     }
 
     private void GeneratePlots()
@@ -214,6 +217,20 @@ public class Grid : MonoBehaviour
             float height = Mathf.Pow((map[pos] + 1), heightAmplifier) + heightOffset;
 
             plot.Height = height;
+
+            if (plot.Location.X >= radius - BeachSize || plot.Location.X <= -radius + BeachSize ||
+                 plot.Location.Z >= radius - BeachSize || plot.Location.Z <= -radius + BeachSize ||
+                 plot.Location.Y >= radius - BeachSize || plot.Location.Y <= -radius + BeachSize)
+            {
+                float max = Mathf.Abs(Mathf.Max(Mathf.Abs(plot.Location.X), Mathf.Abs(plot.Location.Y), Mathf.Abs(plot.Location.Z)) - radius);
+
+                float maxHeight = height / (BeachSize - max); 
+                if (!float.IsInfinity(maxHeight) && !float.IsNaN(maxHeight))
+                {
+                    plot.Height = maxHeight < SeaLevel ? SeaLevel : maxHeight;
+                }
+               
+            }
         }
     }
 
@@ -224,22 +241,35 @@ public class Grid : MonoBehaviour
             if (plot.Height <= SeaLevel)
             {
                 plot.Type = PlotType.Water;
-
-                List<Plot> surrounding = GetSurroundingPlots(plot.Location);
-                Plot higher = surrounding.Where(p => p.Type == PlotType.Water).OrderBy(p => p.Height).LastOrDefault();
-
-                if (higher != null)
-                {
-                    foreach (Plot p in surrounding.Where(pl => pl.Type == PlotType.Water))
-                    {
-                        p.Height = higher.Height;
-                    }
-                    plot.Height = higher.Height;
-                }
+                plot.Height = SeaLevel;
             }
             else
             {
-                plot.Type = PlotType.Ground;
+                plot.Type = PlotType.Grass;
+            }
+        }
+
+        foreach (Plot plot in plots.Values)
+        {
+            bool nearWater = GetSurroundingPlots(plot.Location).Where(x => x.Type == PlotType.Water).Count() > 0;
+
+            if (plot.Height <= BeachLevel && plot.Height > SeaLevel && nearWater )
+            {
+                plot.Type = PlotType.Sand;
+            }
+        }
+    }
+
+    private void GenerateBeaches()
+    {
+        foreach (Plot plot in plots.Values)
+        {
+            if (plot.Location.X == radius || plot.Location.X == -radius ||
+                plot.Location.Z == radius || plot.Location.Z == -radius ||
+                plot.Location.Y == radius || plot.Location.Y == -radius)
+            {
+                plot.Type = PlotType.Water;
+                plot.Height = SeaLevel;
             }
         }
     }
@@ -248,7 +278,7 @@ public class Grid : MonoBehaviour
     {
         foreach (Plot plot in plots.Values)
         {
-            if (plot.Height <= TreeLine && plot.Type == PlotType.Ground)
+            if (plot.Height <= TreeLine && plot.Type == PlotType.Grass)
             {
                 int amount = NoiseMapGenerator.Random.Next(MinAmountTrees, MaxAmountTrees);
 
@@ -261,7 +291,7 @@ public class Grid : MonoBehaviour
     {
         foreach (Plot plot in plots.Values)
         {
-            if (plot.Type != PlotType.Ground) continue;
+            if (plot.Type != PlotType.Grass) continue;
 
             List<Plot> surrounding = GetSurroundingPlots(plot.Location);
 
@@ -294,7 +324,7 @@ public class Grid : MonoBehaviour
 
     public List<Plot> GetSurroundingPlots(HexLocation loc)
     {
-        return GetSurroundingPlots(1, loc);
+        return GetSurroundingPlots(2, loc);
     }
 
     public List<Plot> GetSurroundingPlots(int x, int y, int z)
