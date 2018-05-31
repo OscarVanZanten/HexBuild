@@ -128,9 +128,9 @@ MonoBehaviour:
   sensitivity: 90
   climbSpeed: 15
   normalMoveSpeed: 25
-  maxHeight: 100
+  maxHeight: 75
   groundOFfset: 10
-  HeightOffset: 75
+  HeightOffset: 50
   MaxAngle: 50
   AngleLimit: 90
   Camera: {fileID: 4605540500531178}

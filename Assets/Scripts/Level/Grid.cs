@@ -11,7 +11,8 @@ public class Grid : MonoBehaviour
     [Header("Optimization")]
     [Tooltip("The max radius of tiles being rendered(1 tile = 1 unit)")]
     [SerializeField] private int RenderRadius;
-    private float RenderDistance { get { return (RenderRadius - 5) * size * (float)Math.Sqrt(2); } }
+    [SerializeField] private float RenderRatio;
+    private float RenderDistance { get { return (RenderRadius * RenderRatio) * size * (float)Math.Sqrt(2); } }
     [Tooltip("Amount of graphical level updates per second")]
     [SerializeField] private float UpdateRate;
     [Tooltip("Amount of graphical level updates update cycle")]
@@ -21,6 +22,7 @@ public class Grid : MonoBehaviour
     private bool PlotsCleared = false;
 
     [Header("Level Generation")]
+    [SerializeField] private GameObject SeaPlane;
     [SerializeField] private GameObject plotPrefab;
     [SerializeField] private Transform terrain;
     [SerializeField] private int radius;
@@ -152,6 +154,7 @@ public class Grid : MonoBehaviour
     private void GenerateTerrain(float seed)
     {
         ///General terrain
+        GenerateSea();
         GeneratePlots();
         GenerateHills(seed);
         GenerateLakes();
@@ -161,6 +164,13 @@ public class Grid : MonoBehaviour
 
         //Generate Buildings
         //  GenerateFisher();
+    }
+
+    private void GenerateSea()
+    {
+        float seascale = ((Diameter * size * Mathf.Sqrt(2)) / 10) + 10;
+        SeaPlane.transform.localScale = new Vector3(seascale, 1, seascale);
+        SeaPlane.transform.Translate(new Vector3(0, SeaLevel-1, 0));
     }
 
     private void GeneratePlots()
