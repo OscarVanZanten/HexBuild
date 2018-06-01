@@ -173,7 +173,7 @@ public class Grid : MonoBehaviour
     {
         float seascale = ((Diameter * size * Mathf.Sqrt(2)) / 10) + 10;
         SeaPlane.transform.localScale = new Vector3(seascale, 1, seascale);
-        SeaPlane.transform.Translate(new Vector3(0, SeaLevel + 0.5f, 0));
+        SeaPlane.transform.Translate(new Vector3(0, SeaLevel + 0.8f, 0));
     }
 
     private void GeneratePlots()
