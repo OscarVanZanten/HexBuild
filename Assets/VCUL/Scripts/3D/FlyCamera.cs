@@ -8,6 +8,7 @@ public class FlyCamera : MonoBehaviour
     public float sensitivity = 90f;
     public float climbSpeed = 4f;
     public float normalMoveSpeed = 10f;
+    public float scrollSpeed = 25;
     public float maxHeight = 100;
     public float groundOffset = 10;
     public float HeightOffset = 30;
@@ -30,7 +31,7 @@ public class FlyCamera : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(transform.position, Vector3.down, out hit))
         {
-            float dist = Mathf.Clamp(transform.position.y + -mouse * 10 * climbSpeed * speedScale * Time.deltaTime, hit.point.y + groundOffset, maxHeight) - transform.position.y;
+            float dist = Mathf.Clamp(transform.position.y + -mouse * scrollSpeed * climbSpeed  * Time.deltaTime, hit.transform.position.y + groundOffset, maxHeight) - transform.position.y;
             transform.position += Vector3.up * dist;
         }
         float angle = transform.position.y > HeightOffset ? AngleLimit : MaxAngle + (Mathf.Min(HeightOffset, transform.position.y) / HeightOffset * (AngleLimit - MaxAngle));

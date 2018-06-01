@@ -239,7 +239,7 @@ MonoBehaviour:
   scale: 0.2
   TreeLine: 7
   SeaLevel: 3
-  BeachLevel: 5
+  BeachLevel: 7
   BeachSize: 10
   MinAmountTrees: 0
   MaxAmountTrees: 3
