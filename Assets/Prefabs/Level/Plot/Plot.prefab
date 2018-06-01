@@ -425,6 +425,7 @@ MonoBehaviour:
   SandMaterial: {fileID: 2100000, guid: 98aa3022e4e6fbd4b9fdbbbc9e0fad66, type: 2}
   SnowTemp: 0
   StoneTemp: 5
+  GrassTemp: 12
   SnowLayer: {fileID: 1588680344115160, guid: 7d74d8d69686e564bb9df6a36e94b5d2, type: 2}
   BuildingPosition: {fileID: 4111358465000700}
   ResourcesPosition: {fileID: 4739636913801638}

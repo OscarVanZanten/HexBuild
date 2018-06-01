@@ -35,6 +35,7 @@ public class Plot : MonoBehaviour
     [Header("Weather")]
     [SerializeField] private float SnowTemp;
     [SerializeField] private float StoneTemp;
+    [SerializeField] private float GrassTemp;
     [SerializeField] private GameObject SnowLayer;
     private GameObject Layer;
 
@@ -149,9 +150,17 @@ public class Plot : MonoBehaviour
                     Layer.transform.parent = TopPosition;
                     Layer.transform.localPosition = new Vector3();
                 }
+
                 if (temperature <= StoneTemp)
                 {
                     Type = PlotType.Stone;
+                }
+
+                if (Type == PlotType.Grass)
+                {
+                    MeshRenderer renderer = Top.transform.Find("Hexagon_Grass_Top").GetComponent<MeshRenderer>();
+                    float alpha = (temperature+GrassTemp) / (20 );
+                    renderer.material.color *= alpha;
                 }
             }
         }

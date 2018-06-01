@@ -8,6 +8,8 @@ using UnityEngine;
 
 public class Grid : MonoBehaviour
 {
+    public static Grid Instance { get; private set; }
+
     [Header("Optimization")]
     [Tooltip("The max radius of tiles being rendered(1 tile = 1 unit)")]
     [SerializeField] private int RenderRadius;
@@ -38,7 +40,7 @@ public class Grid : MonoBehaviour
     [SerializeField] private float BeachSize;
     [SerializeField] private int MinAmountTrees;
     [SerializeField] private int MaxAmountTrees;
-    private Dictionary<HexLocation, Plot> plots;
+    [SerializeField] private Dictionary<HexLocation, Plot> plots;
     private int Diameter { get { return radius * 2 + 1; } }
 
     [Header("Buildings")]
@@ -52,6 +54,7 @@ public class Grid : MonoBehaviour
         CurrentZ = -RenderRadius;
         CurrentY = -RenderRadius;
         Generate(seed);
+        Instance = this;
     }
 
     // Update is called once per frame
