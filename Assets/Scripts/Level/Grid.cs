@@ -29,6 +29,8 @@ public class Grid : MonoBehaviour
     [SerializeField] private float size;
     [SerializeField] private float heightAmplifier;
     [SerializeField] private float heightOffset;
+    [SerializeField] private float baseTemperature;
+    [SerializeField] private float temperatureDegration;
     [SerializeField] private float scale;
     [SerializeField] private float TreeLine;
     [SerializeField] private float SeaLevel;
@@ -159,6 +161,7 @@ public class Grid : MonoBehaviour
         GenerateSea();
         GeneratePlots();
         GenerateHills(seed);
+        GenerateTemperature(seed);
         GenerateLakes();
         GenerateBeaches();
 
@@ -168,7 +171,7 @@ public class Grid : MonoBehaviour
         //Generate Buildings
         //  GenerateFisher();
     }
-
+   
     private void GenerateSea()
     {
         float seascale = ((Diameter * size * Mathf.Sqrt(2)) / 10) + 10;
@@ -199,6 +202,7 @@ public class Grid : MonoBehaviour
 
                         Plot plot = obj.GetComponent<Plot>();
                         plot.Location = new HexLocation(xx, yy, zz);
+                        plot.Type = PlotType.Grass;
 
                         plots.Add(plot.Location, plot);
                     }
@@ -234,6 +238,19 @@ public class Grid : MonoBehaviour
         }
     }
 
+    private void GenerateTemperature(float seed)
+    {
+        float[] map = NoiseMapGenerator.GeneratePerlinNoice(Diameter, Diameter, (float)(seed * seed), scale);
+
+        foreach (Plot plot in plots.Values)
+        {
+            int pos = (plot.Location.X + radius) + (plot.Location.Y + radius) * Diameter;
+            float temp = (map[pos] + 1) * baseTemperature - temperatureDegration * plot.Height;
+
+            plot.Temperature = temp;
+        }
+    }
+
     private void GenerateLakes()
     {
         foreach (Plot plot in plots.Values)
@@ -243,10 +260,7 @@ public class Grid : MonoBehaviour
                 plot.Type = PlotType.Water;
                 plot.Height = SeaLevel;
             }
-            else
-            {
-                plot.Type = PlotType.Grass;
-            }
+         
         }
 
         foreach (Plot plot in plots.Values)

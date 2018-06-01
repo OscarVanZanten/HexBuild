@@ -5,18 +5,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum PlotType { Grass, Water, Sand }
+public enum PlotType { Grass, Water, Sand, Stone }
 
 public class Plot : MonoBehaviour
 {
     [Header("Optimization")]
-   
+
     [SerializeField] private GameObject Hexagon;
     private bool IsSolid { get; set; }
 
     [Header("Ground Layers")]
-    [SerializeField] private Transform StoneLayer;
-    [SerializeField] private Transform DirtLayer;
+    [SerializeField] private Transform SecondaryLayer;
+    [SerializeField] private Transform PrimaryLayer;
     [SerializeField] private float DirtPercentage;
 
     [Header("Top Layers")]
@@ -24,7 +24,19 @@ public class Plot : MonoBehaviour
     [SerializeField] private GameObject GrassTop;
     [SerializeField] private GameObject WaterTop;
     [SerializeField] private GameObject SandTop;
+    [SerializeField] private GameObject StoneTop;
     private GameObject Top;
+
+    [Header("Materials")]
+    [SerializeField] private Material DirtMaterial;
+    [SerializeField] private Material StoneMaterial;
+    [SerializeField] private Material SandMaterial;
+
+    [Header("Weather")]
+    [SerializeField] private float SnowTemp;
+    [SerializeField] private float StoneTemp;
+    [SerializeField] private GameObject SnowLayer;
+    private GameObject Layer;
 
     [Header("Positions")]
     [SerializeField] private Transform BuildingPosition;
@@ -59,6 +71,7 @@ public class Plot : MonoBehaviour
                     Top = GameObject.Instantiate(GrassTop);
                     Top.transform.parent = TopPosition;
                     Top.transform.localPosition = new Vector3();
+                    PrimaryLayer.GetComponent<MeshRenderer>().material = DirtMaterial;
                     break;
                 case PlotType.Water:
                     if (Top != null)
@@ -68,6 +81,7 @@ public class Plot : MonoBehaviour
                     Top = GameObject.Instantiate(WaterTop);
                     Top.transform.parent = TopPosition;
                     Top.transform.localPosition = new Vector3();
+                    PrimaryLayer.GetComponent<MeshRenderer>().material = DirtMaterial;
                     break;
                 case PlotType.Sand:
                     if (Top != null)
@@ -77,6 +91,17 @@ public class Plot : MonoBehaviour
                     Top = GameObject.Instantiate(SandTop);
                     Top.transform.parent = TopPosition;
                     Top.transform.localPosition = new Vector3();
+                    PrimaryLayer.GetComponent<MeshRenderer>().material = SandMaterial;
+                    break;
+                case PlotType.Stone:
+                    if (Top != null)
+                    {
+                        GameObject.Destroy(Top);
+                    }
+                    Top = GameObject.Instantiate(StoneTop);
+                    Top.transform.parent = TopPosition;
+                    Top.transform.localPosition = new Vector3();
+                    PrimaryLayer.GetComponent<MeshRenderer>().material = StoneMaterial;
                     break;
             }
         }
@@ -95,9 +120,40 @@ public class Plot : MonoBehaviour
             this.height = value;
             float currentHeight = this.transform.position.y;
             this.transform.Translate(new Vector3(0, (value - currentHeight), 0), Space.Self);
-            StoneLayer.localScale = new Vector3(1, value * (1 - DirtPercentage), 1);
-            StoneLayer.localPosition = new Vector3(0, -value * DirtPercentage - 1, 0);
-            DirtLayer.localScale = new Vector3(1, value * DirtPercentage, 1);
+            SecondaryLayer.localScale = new Vector3(1, value * (1 - DirtPercentage), 1);
+            SecondaryLayer.localPosition = new Vector3(0, -value * DirtPercentage - 1, 0);
+            PrimaryLayer.localScale = new Vector3(1, value * DirtPercentage, 1);
+        }
+    }
+
+    private float temperature;
+    public float Temperature
+    {
+        get
+        {
+            return temperature;
+        }
+        set
+        {
+            temperature = value;
+
+            if (Type != PlotType.Water)
+            {
+                if (temperature <= SnowTemp)
+                {
+                    if (Layer != null)
+                    {
+                        GameObject.Destroy(Layer);
+                    }
+                    Layer = GameObject.Instantiate(SnowLayer);
+                    Layer.transform.parent = TopPosition;
+                    Layer.transform.localPosition = new Vector3();
+                }
+                if (temperature <= StoneTemp)
+                {
+                    Type = PlotType.Stone;
+                }
+            }
         }
     }
 
@@ -132,7 +188,7 @@ public class Plot : MonoBehaviour
     public void ToggleHex(bool enable)
     {
 
-       // Debug.Log(enable);
+        // Debug.Log(enable);
         if (Hexagon.activeSelf != enable)
         {
             Hexagon.SetActive(enable);
