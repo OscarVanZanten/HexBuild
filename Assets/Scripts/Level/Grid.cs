@@ -12,49 +12,49 @@ public class Grid : MonoBehaviour
 
     [Header("Optimization")]
     [Tooltip("The max radius of tiles being rendered(1 tile = 1 unit)")]
-    [SerializeField] private int RenderRadius;
-    [SerializeField] private float RenderRatio;
+    public int RenderRadius;
+    public float RenderRatio;
     private float RenderDistance { get { return (RenderRadius * RenderRatio) * size * (float)Math.Sqrt(2); } }
     [Tooltip("Amount of graphical level updates per second")]
-    [SerializeField] private float UpdateRate;
+    public float UpdateRate;
     [Tooltip("Amount of graphical level updates update cycle")]
-    [SerializeField] private int UpdateAmount;
+    public int UpdateAmount;
     private int CurrentX, CurrentY, CurrentZ;
     private float PlotUpdateDelta;
     private bool PlotsCleared = false;
 
     [Header("Level Generation")]
-    [SerializeField] private GameObject SeaPlane;
-    [SerializeField] private GameObject plotPrefab;
-    [SerializeField] private Transform terrain;
-    [SerializeField] private int radius;
-    [SerializeField] private float size;
-    [SerializeField] private float heightAmplifier;
-    [SerializeField] private float heightOffset;
-    [SerializeField] private float baseTemperature;
-    [SerializeField] private float temperatureDegration;
-    [SerializeField] private float scale;
-    [SerializeField] private float TreeLine;
-    [SerializeField] private float SeaLevel;
-    [SerializeField] private float BeachLevel;
-    [SerializeField] private float BeachSize;
-    [SerializeField] private int MinAmountTrees;
-    [SerializeField] private int MaxAmountTrees;
-    [SerializeField] private Dictionary<HexLocation, Plot> plots;
+    public GameObject SeaPlane;
+    public GameObject plotPrefab;
+    public Transform terrain;
+    public int radius;
+    public float size;
+    public float heightAmplifier;
+    public float heightOffset;
+    public float baseTemperature;
+    public float temperatureDegration;
+    public float scale;
+    public float TreeLine;
+    public float SeaLevel;
+    public float BeachLevel;
+    public float BeachSize;
+    public int MinAmountTrees;
+    public int MaxAmountTrees;
+    public Dictionary<HexLocation, Plot> plots;
     private int Diameter { get { return radius * 2 + 1; } }
 
     [Header("Buildings")]
-    [SerializeField] private GameObject FisherHouse;
+    public GameObject FisherHouse;
 
     // Use this for initialization
     void Start()
     {
+        Instance = this;
         float seed = Mathf.Min((float)NoiseMapGenerator.Random.NextDouble() + 0.33f, 1);
         CurrentX = -RenderRadius;
         CurrentZ = -RenderRadius;
         CurrentY = -RenderRadius;
         Generate(seed);
-        Instance = this;
     }
 
     // Update is called once per frame
@@ -166,7 +166,7 @@ public class Grid : MonoBehaviour
         GenerateHills(seed);
         GenerateTemperature(seed);
         GenerateLakes();
-        GenerateBeaches();
+       // GenerateBeaches();
 
         //Resources
         GenerateTrees();
@@ -234,7 +234,8 @@ public class Grid : MonoBehaviour
                 float maxHeight = height / (BeachSize - max); 
                 if (!float.IsInfinity(maxHeight) && !float.IsNaN(maxHeight))
                 {
-                    plot.Height = maxHeight < SeaLevel ? SeaLevel : maxHeight;
+                    // plot.Height = maxHeight < SeaLevel ? SeaLevel : maxHeight;
+                    plot.Height = maxHeight;
                 }
                
             }
@@ -261,7 +262,7 @@ public class Grid : MonoBehaviour
             if (plot.Height <= SeaLevel)
             {
                 plot.Type = PlotType.Water;
-                plot.Height = SeaLevel;
+               // plot.Height = SeaLevel;
             }
          
         }
@@ -286,7 +287,7 @@ public class Grid : MonoBehaviour
                 plot.Location.Y == radius || plot.Location.Y == -radius)
             {
                 plot.Type = PlotType.Water;
-                plot.Height = SeaLevel;
+              //  plot.Height = SeaLevel;
             }
         }
     }

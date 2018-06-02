@@ -23,6 +23,8 @@ public class Plot : MonoBehaviour
     [SerializeField] private Transform TopPosition;
     [SerializeField] private GameObject GrassTop;
     [SerializeField] private GameObject WaterTop;
+    [SerializeField] private float WaterMaxDiscoloring;
+    [SerializeField] private float WaterMaxDiscolorDepth;
     [SerializeField] private GameObject SandTop;
     [SerializeField] private GameObject StoneTop;
     private GameObject Top;
@@ -62,49 +64,8 @@ public class Plot : MonoBehaviour
         set
         {
             type = value;
-            switch (type)
-            {
-                case PlotType.Grass:
-                    if (Top != null)
-                    {
-                        GameObject.Destroy(Top);
-                    }
-                    Top = GameObject.Instantiate(GrassTop);
-                    Top.transform.parent = TopPosition;
-                    Top.transform.localPosition = new Vector3();
-                    PrimaryLayer.GetComponent<MeshRenderer>().material = DirtMaterial;
-                    break;
-                case PlotType.Water:
-                    if (Top != null)
-                    {
-                        GameObject.Destroy(Top);
-                    }
-                    Top = GameObject.Instantiate(WaterTop);
-                    Top.transform.parent = TopPosition;
-                    Top.transform.localPosition = new Vector3();
-                    PrimaryLayer.GetComponent<MeshRenderer>().material = DirtMaterial;
-                    break;
-                case PlotType.Sand:
-                    if (Top != null)
-                    {
-                        GameObject.Destroy(Top);
-                    }
-                    Top = GameObject.Instantiate(SandTop);
-                    Top.transform.parent = TopPosition;
-                    Top.transform.localPosition = new Vector3();
-                    PrimaryLayer.GetComponent<MeshRenderer>().material = SandMaterial;
-                    break;
-                case PlotType.Stone:
-                    if (Top != null)
-                    {
-                        GameObject.Destroy(Top);
-                    }
-                    Top = GameObject.Instantiate(StoneTop);
-                    Top.transform.parent = TopPosition;
-                    Top.transform.localPosition = new Vector3();
-                    PrimaryLayer.GetComponent<MeshRenderer>().material = StoneMaterial;
-                    break;
-            }
+            UpdatePlot();
+
         }
     }
 
@@ -119,11 +80,7 @@ public class Plot : MonoBehaviour
         set
         {
             this.height = value;
-            float currentHeight = this.transform.position.y;
-            this.transform.Translate(new Vector3(0, (value - currentHeight), 0), Space.Self);
-            SecondaryLayer.localScale = new Vector3(1, value * (1 - DirtPercentage), 1);
-            SecondaryLayer.localPosition = new Vector3(0, -value * DirtPercentage - 1, 0);
-            PrimaryLayer.localScale = new Vector3(1, value * DirtPercentage, 1);
+            UpdatePlot();
         }
     }
 
@@ -159,10 +116,11 @@ public class Plot : MonoBehaviour
                 if (Type == PlotType.Grass)
                 {
                     MeshRenderer renderer = Top.transform.Find("Hexagon_Grass_Top").GetComponent<MeshRenderer>();
-                    float alpha = (temperature+GrassTemp) / (20 );
+                    float alpha = (temperature + GrassTemp) / (Grid.Instance.baseTemperature);
                     renderer.material.color *= alpha;
                 }
             }
+
         }
     }
 
@@ -192,6 +150,66 @@ public class Plot : MonoBehaviour
     void Start()
     {
         FadeObject = GetComponentsInChildren<ObjectFade>();
+    }
+
+    public void UpdatePlot()
+    {
+        //Scale plot
+        float currentHeight = this.transform.position.y;
+        this.transform.Translate(new Vector3(0, (Height - currentHeight), 0), Space.Self);
+        SecondaryLayer.localScale = new Vector3(1, Height * (1 - DirtPercentage), 1);
+        SecondaryLayer.localPosition = new Vector3(0, -Height * DirtPercentage - 1, 0);
+        PrimaryLayer.localScale = new Vector3(1, Height * DirtPercentage, 1);
+
+        //Set top
+        switch (type)
+        {
+            case PlotType.Grass:
+                if (Top != null)
+                {
+                    GameObject.Destroy(Top);
+                }
+                Top = GameObject.Instantiate(GrassTop);
+                Top.transform.parent = TopPosition;
+                Top.transform.localPosition = new Vector3();
+                PrimaryLayer.GetComponent<MeshRenderer>().material = DirtMaterial;
+                break;
+            case PlotType.Water:
+                if (Top != null)
+                {
+                    GameObject.Destroy(Top);
+                }
+                Top = GameObject.Instantiate(WaterTop);
+                Top.transform.parent = TopPosition;
+                Top.transform.localPosition = new Vector3(0, -(Height - Grid.Instance.SeaLevel), 0);
+                PrimaryLayer.GetComponent<MeshRenderer>().material = DirtMaterial;
+
+                MeshRenderer renderer = Top.transform.Find("Water").GetComponent<MeshRenderer>();
+                float alpha = Mathf.Min((height) / (Grid.Instance.SeaLevel- WaterMaxDiscolorDepth) ,1);
+                renderer.material.color *= Mathf.Max(alpha, WaterMaxDiscoloring);
+
+                break;
+            case PlotType.Sand:
+                if (Top != null)
+                {
+                    GameObject.Destroy(Top);
+                }
+                Top = GameObject.Instantiate(SandTop);
+                Top.transform.parent = TopPosition;
+                Top.transform.localPosition = new Vector3();
+                PrimaryLayer.GetComponent<MeshRenderer>().material = SandMaterial;
+                break;
+            case PlotType.Stone:
+                if (Top != null)
+                {
+                    GameObject.Destroy(Top);
+                }
+                Top = GameObject.Instantiate(StoneTop);
+                Top.transform.parent = TopPosition;
+                Top.transform.localPosition = new Vector3();
+                PrimaryLayer.GetComponent<MeshRenderer>().material = StoneMaterial;
+                break;
+        }
     }
 
     public void ToggleHex(bool enable)

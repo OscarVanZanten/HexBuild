@@ -203,7 +203,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1858701088794844}
   m_LocalRotation: {x: 0, y: 0.2588191, z: 0, w: 0.9659258}
-  m_LocalPosition: {x: 87.23567, y: 91.99109, z: 283.18414}
+  m_LocalPosition: {x: 32.177853, y: 11.600602, z: 230.49731}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4365541329711652}
@@ -418,6 +418,8 @@ MonoBehaviour:
   TopPosition: {fileID: 4675564553393504}
   GrassTop: {fileID: 1193557206932794, guid: 219bda5190be18044b2c0f80a47143b6, type: 2}
   WaterTop: {fileID: 1877802940545130, guid: 0a5af89ba42a8244098af3163f294985, type: 2}
+  WaterMaxDiscoloring: 0.5
+  WaterMaxDiscolorDepth: 0.75
   SandTop: {fileID: 1193557206932794, guid: 035dc0551212a854395642f13fbbc8a9, type: 2}
   StoneTop: {fileID: 1877802940545130, guid: 23a73cb0227340b4db7df71dc258aed3, type: 2}
   DirtMaterial: {fileID: 2100000, guid: 4ddad5ba53599ea429bc3b84661c4096, type: 2}
