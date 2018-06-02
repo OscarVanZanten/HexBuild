@@ -234,12 +234,12 @@ MonoBehaviour:
   terrain: {fileID: 1842225309}
   radius: 30
   size: 7.35
-  heightAmplifier: 7
+  heightAmplifier: 5.5
   heightOffset: 0
   baseTemperature: 20
-  temperatureDegration: 1
+  temperatureDegration: 1.7
   scale: 0.2
-  TreeLine: 7
+  TreeLine: 12
   SeaLevel: 3
   BeachLevel: 5
   BeachSize: 10
