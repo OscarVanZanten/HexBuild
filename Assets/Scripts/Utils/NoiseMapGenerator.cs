@@ -10,21 +10,23 @@ namespace Assets.Scripts.Utils
     {
         public static System.Random Random = new System.Random();
 
-        public static float[] GeneratePerlinNoice(int width, int height, float seed, float scale)
+        public static float[] GeneratePerlinNoice(int width, int height, float scale)
         {
             float[] map = new float[width * height];
+
+            float xoffset = (float)Random.NextDouble();
+            float yoffset = (float)Random.NextDouble();
 
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
                 {
-                    float xx = (x  * seed)*scale;
-                    float yy = (y * seed)*scale;
-                    map[x + y * width] = Mathf.PerlinNoise(xx,  yy );
+                    float xx = (float)x / width * scale + xoffset;
+                    float yy = (float)y / height * scale + yoffset;
+                    map[x + y * width] = Mathf.PerlinNoise(xx, yy);
                 }
             }
             return map;
         }
-
     }
 }

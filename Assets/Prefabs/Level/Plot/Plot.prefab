@@ -66,6 +66,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4111358465000700}
+  - component: {fileID: 114345615454743994}
   m_Layer: 0
   m_Name: Building
   m_TagString: Untagged
@@ -203,7 +204,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1858701088794844}
   m_LocalRotation: {x: 0, y: 0.2588191, z: 0, w: 0.9659258}
-  m_LocalPosition: {x: 32.177853, y: 11.600602, z: 230.49731}
+  m_LocalPosition: {x: -59.83855, y: 111.692024, z: 149.23447}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4365541329711652}
@@ -425,8 +426,8 @@ MonoBehaviour:
   DirtMaterial: {fileID: 2100000, guid: 4ddad5ba53599ea429bc3b84661c4096, type: 2}
   StoneMaterial: {fileID: 2100000, guid: 23c465dbc05a80b4eb62194058c3c77e, type: 2}
   SandMaterial: {fileID: 2100000, guid: 98aa3022e4e6fbd4b9fdbbbc9e0fad66, type: 2}
-  SnowTemp: 0
-  StoneTemp: 5
+  SnowTemp: -10
+  StoneTemp: 0
   GrassTemp: 12
   SnowLayer: {fileID: 1588680344115160, guid: 7d74d8d69686e564bb9df6a36e94b5d2, type: 2}
   BuildingPosition: {fileID: 4111358465000700}
@@ -434,3 +435,16 @@ MonoBehaviour:
   TreePrefab: {fileID: 1195217210207260, guid: eaa30744737b7524eb9998ca61fd1a4f, type: 2}
   MinScaleTree: 0.33
   MaxScaleTree: 0.6
+--- !u!114 &114345615454743994
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1504556621151108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c7dab7fb10882c49811ca42c9cf0b1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StockPilePrefab: {fileID: 1099777151982488, guid: 0539348ff412c174bb2ef381e64faed4,
+    type: 2}

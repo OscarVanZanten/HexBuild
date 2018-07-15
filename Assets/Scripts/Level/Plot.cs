@@ -11,44 +11,44 @@ public class Plot : MonoBehaviour
 {
     [Header("Optimization")]
 
-    [SerializeField] private GameObject Hexagon;
+    public GameObject Hexagon;
     private bool IsSolid { get; set; }
 
     [Header("Ground Layers")]
-    [SerializeField] private Transform SecondaryLayer;
-    [SerializeField] private Transform PrimaryLayer;
-    [SerializeField] private float DirtPercentage;
+    public Transform SecondaryLayer;
+    public Transform PrimaryLayer;
+    public float DirtPercentage;
 
     [Header("Top Layers")]
-    [SerializeField] private Transform TopPosition;
-    [SerializeField] private GameObject GrassTop;
-    [SerializeField] private GameObject WaterTop;
-    [SerializeField] private float WaterMaxDiscoloring;
-    [SerializeField] private float WaterMaxDiscolorDepth;
-    [SerializeField] private GameObject SandTop;
-    [SerializeField] private GameObject StoneTop;
+    public Transform TopPosition;
+    public GameObject GrassTop;
+    public GameObject WaterTop;
+    public float WaterMaxDiscoloring;
+    public float WaterMaxDiscolorDepth;
+    public GameObject SandTop;
+    public GameObject StoneTop;
     private GameObject Top;
 
     [Header("Materials")]
-    [SerializeField] private Material DirtMaterial;
-    [SerializeField] private Material StoneMaterial;
-    [SerializeField] private Material SandMaterial;
+    public Material DirtMaterial;
+    public Material StoneMaterial;
+    public Material SandMaterial;
 
     [Header("Weather")]
-    [SerializeField] private float SnowTemp;
-    [SerializeField] private float StoneTemp;
-    [SerializeField] private float GrassTemp;
-    [SerializeField] private GameObject SnowLayer;
+    public float SnowTemp;
+    public float StoneTemp;
+    public float GrassTemp;
+    public GameObject SnowLayer;
     private GameObject Layer;
 
     [Header("Positions")]
-    [SerializeField] private Transform BuildingPosition;
-    [SerializeField] private Transform ResourcesPosition;
+    public Transform BuildingPosition;
+    public Transform ResourcesPosition;
 
     [Header("Resources")]
-    [SerializeField] private GameObject TreePrefab;
-    [SerializeField] private float MinScaleTree;
-    [SerializeField] private float MaxScaleTree;
+    public GameObject TreePrefab;
+    public float MinScaleTree;
+    public float MaxScaleTree;
 
     private List<GameObject> resources = new List<GameObject>();
 
@@ -154,9 +154,11 @@ public class Plot : MonoBehaviour
 
     public void UpdatePlot()
     {
+
         //Scale plot
         float currentHeight = this.transform.position.y;
         this.transform.Translate(new Vector3(0, (Height - currentHeight), 0), Space.Self);
+     //   this.BuildingPosition.Translate(new Vector3(0, 0, 0), Space.Self);
         SecondaryLayer.localScale = new Vector3(1, Height * (1 - DirtPercentage), 1);
         SecondaryLayer.localPosition = new Vector3(0, -Height * DirtPercentage - 1, 0);
         PrimaryLayer.localScale = new Vector3(1, Height * DirtPercentage, 1);
@@ -214,8 +216,6 @@ public class Plot : MonoBehaviour
 
     public void ToggleHex(bool enable)
     {
-
-        // Debug.Log(enable);
         if (Hexagon.activeSelf != enable)
         {
             Hexagon.SetActive(enable);

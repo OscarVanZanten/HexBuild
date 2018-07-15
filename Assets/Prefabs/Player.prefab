@@ -38,6 +38,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4627153779109720}
   - component: {fileID: 114625604932744424}
+  - component: {fileID: 114410284224845504}
+  - component: {fileID: 114613012287038654}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -103,6 +105,7 @@ Camera:
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -114,6 +117,30 @@ AudioListener:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1119136641382070}
   m_Enabled: 1
+--- !u!114 &114410284224845504
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1168357540209140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 558cc3fd823b527448469598e9ff312b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Camera: {fileID: 20501932910363346}
+  Selector: {fileID: 114613012287038654}
+--- !u!114 &114613012287038654
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1168357540209140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8804be871bc13848a0fcce16ba3fd76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114625604932744424
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -128,10 +155,11 @@ MonoBehaviour:
   sensitivity: 90
   climbSpeed: 15
   normalMoveSpeed: 25
-  maxHeight: 75
-  groundOFfset: 10
-  HeightOffset: 50
-  MaxAngle: 50
+  scrollSpeed: 25
+  maxHeight: 100
+  groundOffset: 10
+  HeightOffset: 80
+  MaxAngle: 30
   AngleLimit: 90
   Camera: {fileID: 4605540500531178}
 --- !u!124 &124641802069128922

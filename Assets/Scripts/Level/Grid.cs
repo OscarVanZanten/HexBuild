@@ -50,11 +50,12 @@ public class Grid : MonoBehaviour
     void Start()
     {
         Instance = this;
-        float seed = Mathf.Min((float)NoiseMapGenerator.Random.NextDouble() + 0.33f, 1);
+
         CurrentX = -RenderRadius;
         CurrentZ = -RenderRadius;
         CurrentY = -RenderRadius;
-        Generate(seed);
+
+        Generate();
     }
 
     // Update is called once per frame
@@ -101,7 +102,6 @@ public class Grid : MonoBehaviour
                     CurrentY = -RenderRadius;
                 }
 
-                //Debug.Log("X: " + CurrentX + " Y:" + CurrentY + " Z: " + CurrentZ);
                 if (CurrentX + CurrentY + CurrentZ == 0)
                 {
                     Plot camplot = GetCurrentCameraPlot();
@@ -153,20 +153,19 @@ public class Grid : MonoBehaviour
         ClearPlots();
     }
 
-    private void Generate(float seed)
+    private void Generate()
     {
-        GenerateTerrain(seed);
+        GenerateTerrain();
     }
 
-    private void GenerateTerrain(float seed)
+    private void GenerateTerrain()
     {
         ///General terrain
         GenerateSea();
         GeneratePlots();
-        GenerateHills(seed);
-        GenerateTemperature(seed);
+        GenerateHills();
+        GenerateTemperature();
         GenerateLakes();
-       // GenerateBeaches();
 
         //Resources
         GenerateTrees();
@@ -174,7 +173,7 @@ public class Grid : MonoBehaviour
         //Generate Buildings
         //  GenerateFisher();
     }
-   
+
     private void GenerateSea()
     {
         float seascale = ((Diameter * size * Mathf.Sqrt(2)) / 10) + 10;
@@ -214,9 +213,9 @@ public class Grid : MonoBehaviour
         }
     }
 
-    private void GenerateHills(float seed)
+    private void GenerateHills()
     {
-        float[] map = NoiseMapGenerator.GeneratePerlinNoice(Diameter, Diameter, (float)seed, scale);
+        float[] map = NoiseMapGenerator.GeneratePerlinNoice(Diameter, Diameter, scale);
 
         foreach (Plot plot in plots.Values)
         {
@@ -225,26 +224,24 @@ public class Grid : MonoBehaviour
 
             plot.Height = height;
 
-            if (plot.Location.X >= radius - BeachSize || plot.Location.X <= -radius + BeachSize ||
-                 plot.Location.Z >= radius - BeachSize || plot.Location.Z <= -radius + BeachSize ||
-                 plot.Location.Y >= radius - BeachSize || plot.Location.Y <= -radius + BeachSize)
-            {
-                float max = Mathf.Abs(Mathf.Max(Mathf.Abs(plot.Location.X), Mathf.Abs(plot.Location.Y), Mathf.Abs(plot.Location.Z)) - radius);
+            float max = Mathf.Abs(radius -
+                    Mathf.Max(
+                        Mathf.Abs(plot.Location.X),
+                        Mathf.Abs(plot.Location.Y),
+                        Mathf.Abs(plot.Location.Z)
+                        ));
 
-                float maxHeight = height / (BeachSize - max); 
-                if (!float.IsInfinity(maxHeight) && !float.IsNaN(maxHeight))
-                {
-                    // plot.Height = maxHeight < SeaLevel ? SeaLevel : maxHeight;
-                    plot.Height = maxHeight;
-                }
-               
+
+            if (BeachSize  - max >  0)
+            {
+                plot.Height = plot.Height / BeachSize * max;
             }
         }
     }
 
-    private void GenerateTemperature(float seed)
+    private void GenerateTemperature()
     {
-        float[] map = NoiseMapGenerator.GeneratePerlinNoice(Diameter, Diameter, (float)(seed * seed), scale);
+        float[] map = NoiseMapGenerator.GeneratePerlinNoice(Diameter, Diameter, scale);
 
         foreach (Plot plot in plots.Values)
         {
@@ -262,35 +259,35 @@ public class Grid : MonoBehaviour
             if (plot.Height <= SeaLevel)
             {
                 plot.Type = PlotType.Water;
-               // plot.Height = SeaLevel;
+                // plot.Height = SeaLevel;
             }
-         
+
         }
 
         foreach (Plot plot in plots.Values)
         {
             bool nearWater = GetSurroundingPlots(plot.Location).Where(x => x.Type == PlotType.Water).Count() > 0;
 
-            if (plot.Height <= BeachLevel && plot.Height > SeaLevel && nearWater )
+            if (plot.Height <= BeachLevel && plot.Height > SeaLevel && nearWater)
             {
                 plot.Type = PlotType.Sand;
             }
         }
     }
 
-    private void GenerateBeaches()
-    {
-        foreach (Plot plot in plots.Values)
-        {
-            if (plot.Location.X == radius || plot.Location.X == -radius ||
-                plot.Location.Z == radius || plot.Location.Z == -radius ||
-                plot.Location.Y == radius || plot.Location.Y == -radius)
-            {
-                plot.Type = PlotType.Water;
-              //  plot.Height = SeaLevel;
-            }
-        }
-    }
+    //private void GenerateBeaches()
+    //{
+    //    foreach (Plot plot in plots.Values)
+    //    {
+    //        if (plot.Location.X == radius || plot.Location.X == -radius ||
+    //            plot.Location.Z == radius || plot.Location.Z == -radius ||
+    //            plot.Location.Y == radius || plot.Location.Y == -radius)
+    //        {
+    //            plot.Type = PlotType.Water;
+    //          //  plot.Height = SeaLevel;
+    //        }
+    //    }
+    //}
 
     private void GenerateTrees()
     {

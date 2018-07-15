@@ -11,7 +11,7 @@ public class ObjectFade : MonoBehaviour
 
     private static Dictionary<string, Material> CachedMaterials = new Dictionary<string, Material>();
 
-    private MeshRenderer renderer;
+    private new MeshRenderer renderer;
     private bool rendered;
     private float currentFade;
 
