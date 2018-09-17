@@ -339,8 +339,18 @@ public class Grid : MonoBehaviour
 
     public List<Plot> GetSurroundingPlots(HexLocation loc)
     {
-        return GetSurroundingPlots(2, loc);
+        List<Plot> found = GetSurroundingPlots(1, loc);
+        List<Plot> ordered = new List<Plot>();
+        if (found.Count > 5) { ordered.Add(found[5]); }
+        if (found.Count > 4) { ordered.Add(found[4]); }
+        if (found.Count > 2) { ordered.Add(found[2]); }
+        if (found.Count > 0) { ordered.Add(found[0]); }
+        if (found.Count > 1) { ordered.Add(found[1]); }
+        if (found.Count > 3) { ordered.Add(found[3]); }
+        return ordered;
     }
+
+   
 
     public List<Plot> GetSurroundingPlots(int x, int y, int z)
     {
@@ -351,17 +361,21 @@ public class Grid : MonoBehaviour
     {
         List<Plot> p = new List<Plot>();
 
-        for (int xx = -radius; xx < radius; xx++)
+        for (int xx = -radius; xx <= radius; xx++)
         {
-            for (int yy = -radius; yy < radius; yy++)
+            for (int yy = -radius; yy <= radius; yy++)
             {
-                for (int zz = -radius; zz < radius; zz++)
+                for (int zz = -radius; zz <= radius; zz++)
                 {
+                    if (xx == 0 && zz == 0 && yy == 0)
+                    {
+                        continue;
+                    }
+
                     Plot plot = GetPlot(xx + loc.X, yy + loc.Y, zz + loc.Z);
                     if (plot != null)
                     {
                         p.Add(plot);
-                        // if (plot.Location == loc) continue;
                     }
                 }
             }

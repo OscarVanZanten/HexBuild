@@ -5,9 +5,16 @@ using UnityEngine;
 public class CameraInteraction : MonoBehaviour
 {
     public Camera Camera;
-    public BuildingSelector Selector; 
+    public BuildingSelector Selector;
 
-    private PlotBuildingGrid Current;
+    private PlotGrid Current;
+    public bool IsBuilding
+    {
+        get
+        {
+            return Current != null ? Current.Status == BuildStatus.Preview : false;
+        }
+    }
 
     // Use this for initialization
     void Start()
@@ -18,16 +25,14 @@ public class CameraInteraction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-      
-
         if (Current != null)
         {
             if (Current.Status == BuildStatus.None)
             {
-                Current.PlacePreviewBuilding(Selector.Selected);
+                PlaceInitialPreview();
             }
-            
-            if(Current.Status == BuildStatus.Preview)
+
+            if (Current.Status == BuildStatus.Preview)
             {
                 Vector3 pointed = GetPointedLocation();
                 Vector3 pointedLoc = new Vector3(pointed.x, 0, pointed.z);
@@ -35,24 +40,21 @@ public class CameraInteraction : MonoBehaviour
 
                 Vector3 dir = pointedLoc - currentLoc;
                 Quaternion rotation = Quaternion.LookRotation(dir);
-                int i = (int)((rotation.eulerAngles.y) / Current.RotationPerBuilding) ;
+                int i = (int)((rotation.eulerAngles.y) / Current.RotationPerBuilding);
 
                 if (pointed != Vector3.zero)
                 {
-                    Current.PlacePreviewBuildingPosition(i);
+                    UpdatePreview(i);
                 }
 
                 if (Input.GetMouseButtonDown(0)) //check if the LMB is clicked
                 {
-                    Current.RemovePreviewBuilding();
-                    Current.PlaceBuilding(Selector.Selected, i);
-                    Current = null;
+                    Place(i);
                 }
 
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
-                    Current.RemovePreviewBuilding();
-                    Current = null;
+                    CancelPreview();
                 }
             }
         }
@@ -62,11 +64,79 @@ public class CameraInteraction : MonoBehaviour
         }
     }
 
+    private void PlaceInitialPreview()
+    {
+        switch (Selector.Selected)
+        {
+            case StructureType.Road:
+                Current.PlacePreviewRoad();
+                break;
+            case StructureType.Square:
+                Current.PlacePreviewSquare();
+                break;
+            default:
+                Current.PlacePreviewBuilding(Selector.Selected);
+                break;
+        }
+    }
+
+    private void UpdatePreview(int i)
+    {
+        switch (Selector.Selected)
+        {
+            case StructureType.Road:
+                Current.PlacePreviewRoadPosition(i);
+                break;
+            case StructureType.Square:
+                break;
+            default:
+                Current.PlacePreviewBuildingPosition(i);
+                break;
+        }
+    }
+
+    private void Place(int i)
+    {
+        switch (Selector.Selected)
+        {
+            case StructureType.Road:
+                Current.RemovePreviewRoad();
+                Current.PlaceRoad(i);
+                break;
+            case StructureType.Square:
+                Current.RemovePreviewSquare();
+                Current.PlaceSquare();
+                break;
+            default:
+                Current.RemovePreviewBuilding();
+                Current.PlaceBuilding(Selector.Selected, i);
+                break;
+        }
+        Current = null;
+    }
+
+    private void CancelPreview()
+    {
+        switch (Selector.Selected)
+        {
+            case StructureType.Road:
+                Current.RemovePreviewRoad();
+                break;
+            case StructureType.Square:
+                Current.RemovePreviewSquare();
+                break;
+            default:
+                Current.RemovePreviewBuilding();
+                break;
+        }
+        Current = null;
+    }
+
     /// <summary>
     /// Gets the current selected plot
     /// </summary>
     /// <returns></returns>
-    private PlotBuildingGrid GetClickedGrid()
+    private PlotGrid GetClickedGrid()
     {
         if (Input.GetMouseButtonDown(0)) //check if the LMB is clicked
         {
@@ -76,7 +146,7 @@ public class CameraInteraction : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 Plot p = hit.transform.gameObject.GetComponentInParent<Plot>();
-                return p.GetComponentInChildren<PlotBuildingGrid>();
+                return p.GetComponentInChildren<PlotGrid>();
             }
         }
         return null;

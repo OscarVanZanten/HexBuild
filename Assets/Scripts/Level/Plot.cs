@@ -13,6 +13,7 @@ public class Plot : MonoBehaviour
 
     public GameObject Hexagon;
     private bool IsSolid { get; set; }
+    public PlotGrid PlotGrid;
 
     [Header("Ground Layers")]
     public Transform SecondaryLayer;
@@ -158,7 +159,7 @@ public class Plot : MonoBehaviour
         //Scale plot
         float currentHeight = this.transform.position.y;
         this.transform.Translate(new Vector3(0, (Height - currentHeight), 0), Space.Self);
-     //   this.BuildingPosition.Translate(new Vector3(0, 0, 0), Space.Self);
+        //   this.BuildingPosition.Translate(new Vector3(0, 0, 0), Space.Self);
         SecondaryLayer.localScale = new Vector3(1, Height * (1 - DirtPercentage), 1);
         SecondaryLayer.localPosition = new Vector3(0, -Height * DirtPercentage - 1, 0);
         PrimaryLayer.localScale = new Vector3(1, Height * DirtPercentage, 1);
@@ -187,7 +188,7 @@ public class Plot : MonoBehaviour
                 PrimaryLayer.GetComponent<MeshRenderer>().material = DirtMaterial;
 
                 MeshRenderer renderer = Top.transform.Find("Water").GetComponent<MeshRenderer>();
-                float alpha = Mathf.Min((height) / (Grid.Instance.SeaLevel- WaterMaxDiscolorDepth) ,1);
+                float alpha = Mathf.Min((height) / (Grid.Instance.SeaLevel - WaterMaxDiscolorDepth), 1);
                 renderer.material.color *= Mathf.Max(alpha, WaterMaxDiscoloring);
 
                 break;
@@ -237,4 +238,5 @@ public class Plot : MonoBehaviour
             objectFade.SetFade(fade);
         }
     }
+
 }

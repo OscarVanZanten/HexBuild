@@ -26,8 +26,6 @@ public class FlyCamera : MonoBehaviour
     private void Update()
     {
         float mouse = Input.GetAxisRaw("Mouse ScrollWheel");
-
-
         RaycastHit hit;
         if (Physics.Raycast(transform.position, Vector3.down, out hit))
         {

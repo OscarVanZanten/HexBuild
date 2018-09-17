@@ -2,16 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Building : MonoBehaviour
+public class Building : Structure
 {
-    public BuildingType Type;
-
-    public GameObject Prefab;
-    public GameObject PossiblePrefab;
-    public GameObject FailedPrefab;
-
-    private GameObject Shown;
-
     private Building left;
     private Building right;
 
@@ -52,7 +44,7 @@ public class Building : MonoBehaviour
 
     }
 
-    private void UpdatePlacement()
+    protected virtual void UpdatePlacement()
     {
 
     }
