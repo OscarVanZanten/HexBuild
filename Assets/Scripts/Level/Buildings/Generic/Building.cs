@@ -17,6 +17,7 @@ public class Building : Structure
         {
             left = value;
             UpdatePlacement();
+            
         }
     }
     public Building Right
@@ -29,6 +30,7 @@ public class Building : Structure
         {
             right = value;
             UpdatePlacement();
+          
         }
     }
 
@@ -44,7 +46,7 @@ public class Building : Structure
 
     }
 
-    protected virtual void UpdatePlacement()
+    public virtual void UpdatePlacement()
     {
 
     }

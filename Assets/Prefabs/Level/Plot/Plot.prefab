@@ -450,15 +450,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Plot: {fileID: 114094077277415048}
-  buildings:
+  Buildings:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  square: {fileID: 0}
-  roads:
+  Square: {fileID: 0}
+  Roads:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

@@ -28,6 +28,7 @@ public class PlotGrid : MonoBehaviour
         {
             Square b = StructureFactory.Instance.GetSquare();
             Square = b;
+            Square.PlotGrid = this;
             Square.transform.parent = transform;
             Square.transform.localPosition = new Vector3();
         }
@@ -62,6 +63,7 @@ public class PlotGrid : MonoBehaviour
         {
             Road b = StructureFactory.Instance.GetRoad();
             Roads[i] = b;
+            Roads[i].PlotGrid = this;
             Roads[i].transform.parent = transform;
             Roads[i].transform.localPosition = new Vector3();
             Roads[i].transform.rotation = Quaternion.Euler(Vector3.up * RotationPerBuilding * (float)(i - 1.5));
@@ -78,7 +80,13 @@ public class PlotGrid : MonoBehaviour
                 int iii = i + 2;
                 int plotIndex = (iii >= Roads.Length) ? iii - Roads.Length : iii;
 
-                Roads[i].Left = grid.Roads[plotIndex];
+                var newRoad = grid.Roads[plotIndex];
+
+                if (newRoad != null)
+                {
+                    Roads[i].Left = newRoad;
+                    newRoad.Right = Roads[i];
+                }
 
                 //if (Roads[i].Left != null)
                 //{
@@ -86,7 +94,7 @@ public class PlotGrid : MonoBehaviour
                 //};
             }
 
-            
+
             {
                 var rightPlot = SurroundingPlots[i];
                 var grid = rightPlot.PlotGrid;
@@ -94,8 +102,11 @@ public class PlotGrid : MonoBehaviour
                 int iii = i + 4;
                 int plotIndex = (iii >= Roads.Length) ? iii - Roads.Length : iii;
 
-                Roads[i].Right = grid.Roads[plotIndex];
-
+                if (grid.Roads[plotIndex] != null)
+                {
+                    Roads[i].Right = grid.Roads[plotIndex];
+                    grid.Roads[plotIndex].Left = Roads[i];
+                }
                 //if (Roads[i].Right != null)
                 //{
                 //    Roads[i].Right.GetComponentInChildren<MeshRenderer>().material.color = Color.green;
@@ -147,6 +158,7 @@ public class PlotGrid : MonoBehaviour
         if (CanPlaceBuilding(i))
         {
             Building b = StructureFactory.Instance.GetBuilding(building);
+            Buildings[i].PlotGrid = this;
             Buildings[i] = b;
             Buildings[i].transform.parent = transform;
             Buildings[i].transform.localPosition = new Vector3();

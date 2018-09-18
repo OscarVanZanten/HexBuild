@@ -12,4 +12,6 @@ public class Structure : MonoBehaviour
     public GameObject FailedPrefab;
 
     private GameObject Shown;
+
+    public PlotGrid PlotGrid;
 }
