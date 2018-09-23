@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BuildingSelector : MonoBehaviour {
     public CameraInteraction cameraInteraction;
-    public StructureType Selected { get; private set; }
+    public StructureType Selected { get;  set; }
 
 	// Use this for initialization
 	void Start () {

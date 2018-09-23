@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CameraInteraction : MonoBehaviour
 {
@@ -40,7 +41,7 @@ public class CameraInteraction : MonoBehaviour
 
                 Vector3 dir = pointedLoc - currentLoc;
                 Quaternion rotation = Quaternion.LookRotation(dir);
-                int i = (int)((rotation.eulerAngles.y) / Current.RotationPerBuilding);
+                int i = (int)((rotation.eulerAngles.y  + 30) / Current.RotationPerBuilding) ;
 
                 if (pointed != Vector3.zero)
                 {
@@ -145,8 +146,17 @@ public class CameraInteraction : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
-                Plot p = hit.transform.gameObject.GetComponentInParent<Plot>();
-                return p.GetComponentInChildren<PlotGrid>();
+                if (!EventSystem.current.IsPointerOverGameObject())
+                {
+                    Plot p = hit.transform.gameObject.GetComponentInParent<Plot>();
+                    Debug.Log(hit.transform.gameObject.name);
+                    return p.GetComponentInChildren<PlotGrid>();
+                }
+                else
+                {
+                    Debug.Log("Hit UI");
+                }
+              
             }
         }
         return null;

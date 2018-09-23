@@ -27,6 +27,10 @@ public class PlotGrid : MonoBehaviour
         if (CanPlaceSquare())
         {
             Square b = StructureFactory.Instance.GetSquare();
+            if (b == null)
+            {
+                return;
+            }
             Square = b;
             Square.PlotGrid = this;
             Square.transform.parent = transform;
@@ -42,6 +46,10 @@ public class PlotGrid : MonoBehaviour
     public void PlacePreviewSquare()
     {
         Square b = StructureFactory.Instance.GetSquare();
+        if (b == null)
+        {
+            return;
+        }
         this.Status = BuildStatus.Preview;
         this.previewSquare = b;
         this.previewSquare.transform.parent = transform;
@@ -62,6 +70,10 @@ public class PlotGrid : MonoBehaviour
         if (CanPlaceRoad(i))
         {
             Road b = StructureFactory.Instance.GetRoad();
+            if (b == null)
+            {
+                return;
+            }
             Roads[i] = b;
             Roads[i].PlotGrid = this;
             Roads[i].transform.parent = transform;
@@ -133,6 +145,10 @@ public class PlotGrid : MonoBehaviour
     public void PlacePreviewRoad()
     {
         Road b = StructureFactory.Instance.GetRoad();
+        if (b == null)
+        {
+            return;
+        }
         this.Status = BuildStatus.Preview;
         this.previewRoad = b;
         this.previewRoad.transform.parent = transform;
@@ -158,8 +174,13 @@ public class PlotGrid : MonoBehaviour
         if (CanPlaceBuilding(i))
         {
             Building b = StructureFactory.Instance.GetBuilding(building);
-            Buildings[i].PlotGrid = this;
+            if (b == null)
+            {
+                return;
+            }
+
             Buildings[i] = b;
+            Buildings[i].PlotGrid = this;
             Buildings[i].transform.parent = transform;
             Buildings[i].transform.localPosition = new Vector3();
             Buildings[i].transform.rotation = Quaternion.Euler(Vector3.up * RotationPerBuilding * (i - 1));
@@ -187,6 +208,10 @@ public class PlotGrid : MonoBehaviour
     public void PlacePreviewBuilding(StructureType building)
     {
         Building b = StructureFactory.Instance.GetBuilding(building);
+        if (b == null)
+        {
+            return;
+        }
         this.Status = BuildStatus.Preview;
         this.previewBuilding = b;
         this.previewBuilding.transform.parent = transform;
