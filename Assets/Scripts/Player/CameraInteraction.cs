@@ -8,14 +8,10 @@ public class CameraInteraction : MonoBehaviour
     public Camera Camera;
     public BuildingSelector Selector;
 
-    private PlotGrid Current;
-    public bool IsBuilding
-    {
-        get
-        {
-            return Current != null ? Current.Status == BuildStatus.Preview : false;
-        }
-    }
+    private PlotGrid CurrentClickedPlot;
+    private PlotGrid CurrentHoveredPlot;
+
+    public bool IsBuilding { get; set; }
 
     // Use this for initialization
     void Start()
@@ -26,22 +22,28 @@ public class CameraInteraction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Current != null)
+
+        if (CurrentClickedPlot != null)
         {
-            if (Current.Status == BuildStatus.None)
+            if (CurrentHoveredPlot != null)
+            {
+                CurrentHoveredPlot.Plot.Selected = false;
+            }
+
+            if (CurrentClickedPlot.Status == BuildStatus.None)
             {
                 PlaceInitialPreview();
             }
 
-            if (Current.Status == BuildStatus.Preview)
+            if (CurrentClickedPlot.Status == BuildStatus.Preview)
             {
                 Vector3 pointed = GetPointedLocation();
                 Vector3 pointedLoc = new Vector3(pointed.x, 0, pointed.z);
-                Vector3 currentLoc = new Vector3(Current.transform.position.x, 0, Current.transform.position.z);
+                Vector3 currentLoc = new Vector3(CurrentClickedPlot.transform.position.x, 0, CurrentClickedPlot.transform.position.z);
 
                 Vector3 dir = pointedLoc - currentLoc;
                 Quaternion rotation = Quaternion.LookRotation(dir);
-                int i = (int)((rotation.eulerAngles.y  + 30) / Current.RotationPerBuilding) ;
+                int i = (int)((rotation.eulerAngles.y + 30) / CurrentClickedPlot.RotationPerBuilding);
 
                 if (pointed != Vector3.zero)
                 {
@@ -61,7 +63,26 @@ public class CameraInteraction : MonoBehaviour
         }
         else
         {
-            Current = GetClickedGrid();
+            if (IsBuilding)
+            {
+                CurrentClickedPlot = GetClickedGrid();
+
+                if (CurrentHoveredPlot != null)
+                {
+                    CurrentHoveredPlot.Plot.Selected = false;
+                }
+
+                CurrentHoveredPlot = GetHoveredOverPlotGrid();
+                if (CurrentHoveredPlot != null)
+                {
+                    CurrentHoveredPlot.Plot.Selected = true;
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                IsBuilding = false;
+                CurrentHoveredPlot.Plot.Selected = false;
+            }
         }
     }
 
@@ -70,13 +91,13 @@ public class CameraInteraction : MonoBehaviour
         switch (Selector.Selected)
         {
             case StructureType.Road:
-                Current.PlacePreviewRoad();
+                CurrentClickedPlot.PlacePreviewRoad();
                 break;
             case StructureType.Square:
-                Current.PlacePreviewSquare();
+                CurrentClickedPlot.PlacePreviewSquare();
                 break;
             default:
-                Current.PlacePreviewBuilding(Selector.Selected);
+                CurrentClickedPlot.PlacePreviewBuilding(Selector.Selected);
                 break;
         }
     }
@@ -86,12 +107,12 @@ public class CameraInteraction : MonoBehaviour
         switch (Selector.Selected)
         {
             case StructureType.Road:
-                Current.PlacePreviewRoadPosition(i);
+                CurrentClickedPlot.PlacePreviewRoadPosition(i);
                 break;
             case StructureType.Square:
                 break;
             default:
-                Current.PlacePreviewBuildingPosition(i);
+                CurrentClickedPlot.PlacePreviewBuildingPosition(i);
                 break;
         }
     }
@@ -101,19 +122,19 @@ public class CameraInteraction : MonoBehaviour
         switch (Selector.Selected)
         {
             case StructureType.Road:
-                Current.RemovePreviewRoad();
-                Current.PlaceRoad(i);
+                CurrentClickedPlot.RemovePreviewRoad();
+                CurrentClickedPlot.PlaceRoad(i);
                 break;
             case StructureType.Square:
-                Current.RemovePreviewSquare();
-                Current.PlaceSquare();
+                CurrentClickedPlot.RemovePreviewSquare();
+                CurrentClickedPlot.PlaceSquare();
                 break;
             default:
-                Current.RemovePreviewBuilding();
-                Current.PlaceBuilding(Selector.Selected, i);
+                CurrentClickedPlot.RemovePreviewBuilding();
+                CurrentClickedPlot.PlaceBuilding(Selector.Selected, i);
                 break;
         }
-        Current = null;
+        CurrentClickedPlot = null;
     }
 
     private void CancelPreview()
@@ -121,16 +142,16 @@ public class CameraInteraction : MonoBehaviour
         switch (Selector.Selected)
         {
             case StructureType.Road:
-                Current.RemovePreviewRoad();
+                CurrentClickedPlot.RemovePreviewRoad();
                 break;
             case StructureType.Square:
-                Current.RemovePreviewSquare();
+                CurrentClickedPlot.RemovePreviewSquare();
                 break;
             default:
-                Current.RemovePreviewBuilding();
+                CurrentClickedPlot.RemovePreviewBuilding();
                 break;
         }
-        Current = null;
+        CurrentClickedPlot = null;
     }
 
     /// <summary>
@@ -141,22 +162,27 @@ public class CameraInteraction : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0)) //check if the LMB is clicked
         {
-            RaycastHit hit;
-            Ray ray = Camera.ScreenPointToRay(Input.mousePosition);
+            return GetHoveredOverPlotGrid();
+        }
+        return null;
+    }
 
-            if (Physics.Raycast(ray, out hit))
+    private PlotGrid GetHoveredOverPlotGrid()
+    {
+        RaycastHit hit;
+        Ray ray = Camera.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (!EventSystem.current.IsPointerOverGameObject())
             {
-                if (!EventSystem.current.IsPointerOverGameObject())
-                {
-                    Plot p = hit.transform.gameObject.GetComponentInParent<Plot>();
-                    Debug.Log(hit.transform.gameObject.name);
-                    return p.GetComponentInChildren<PlotGrid>();
-                }
-                else
-                {
-                    Debug.Log("Hit UI");
-                }
-              
+                Plot p = hit.transform.gameObject.GetComponentInParent<Plot>();
+                Debug.Log(hit.transform.gameObject.name);
+                return p.GetComponentInChildren<PlotGrid>();
+            }
+            else
+            {
+                Debug.Log("Hit UI");
             }
         }
         return null;

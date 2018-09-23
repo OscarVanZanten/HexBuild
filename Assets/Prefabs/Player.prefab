@@ -567,7 +567,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 224507847428962192}
   m_Direction: 0
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.9973958
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -646,6 +646,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Selector: {fileID: 114613012287038654}
+  camera: {fileID: 114410284224845504}
   Type: 0
 --- !u!114 &114190543052670172
 MonoBehaviour:
@@ -850,7 +851,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 224573382211188520}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.9896053
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -902,6 +903,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Selector: {fileID: 114613012287038654}
+  camera: {fileID: 114410284224845504}
   Type: 2
 --- !u!114 &114625604932744424
 MonoBehaviour:
@@ -914,7 +916,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b7487f31bf5c8e4fbd7821b02e513c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensitivity: 90
+  sensitivity: 120
   climbSpeed: 15
   normalMoveSpeed: 25
   scrollSpeed: 25
@@ -1149,6 +1151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Selector: {fileID: 114613012287038654}
+  camera: {fileID: 114410284224845504}
   Type: 1
 --- !u!124 &124641802069128922
 Behaviour:
@@ -1452,8 +1455,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000015258789, y: -0.0000044876433}
-  m_SizeDelta: {x: -0.000015258789, y: 60}
+  m_AnchoredPosition: {x: 0.000015258789, y: 0.0010273246}
+  m_SizeDelta: {x: 0.99998474, y: 60}
   m_Pivot: {x: 0, y: 1}
 --- !u!224 &224670458448778318
 RectTransform:

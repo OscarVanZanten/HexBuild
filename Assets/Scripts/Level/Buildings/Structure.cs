@@ -7,11 +7,5 @@ public class Structure : MonoBehaviour
 {
     public StructureType Type;
 
-    public GameObject Prefab;
-    public GameObject PossiblePrefab;
-    public GameObject FailedPrefab;
-
-    private GameObject Shown;
-
     public PlotGrid PlotGrid;
 }

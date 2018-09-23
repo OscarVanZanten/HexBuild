@@ -41,6 +41,7 @@ public class Plot : MonoBehaviour
     public float GrassTemp;
     public GameObject SnowLayer;
     private GameObject Layer;
+    public GameObject WeatherParent;
 
     [Header("Positions")]
     public Transform BuildingPosition;
@@ -50,6 +51,10 @@ public class Plot : MonoBehaviour
     public GameObject TreePrefab;
     public float MinScaleTree;
     public float MaxScaleTree;
+
+    [Header("Selector")]
+    public GameObject Selector;
+    public bool Selected { get { return Selector.activeInHierarchy; } set { Selector.SetActive(value); } }
 
     private List<GameObject> resources = new List<GameObject>();
 
@@ -105,7 +110,7 @@ public class Plot : MonoBehaviour
                         GameObject.Destroy(Layer);
                     }
                     Layer = GameObject.Instantiate(SnowLayer);
-                    Layer.transform.parent = TopPosition;
+                    Layer.transform.parent = WeatherParent.transform;
                     Layer.transform.localPosition = new Vector3();
                 }
 

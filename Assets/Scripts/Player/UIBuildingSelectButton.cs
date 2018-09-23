@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class UIBuildingSelectButton : MonoBehaviour {
 
     public BuildingSelector Selector;
+    public CameraInteraction camera;
     public StructureType Type;
 
 	// Use this for initialization
@@ -21,5 +22,6 @@ public class UIBuildingSelectButton : MonoBehaviour {
     public void SetBuildingType()
     {
         Selector.Selected = Type;
+        camera.IsBuilding = true;
     }
 }
