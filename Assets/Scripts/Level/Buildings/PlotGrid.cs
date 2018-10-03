@@ -10,12 +10,14 @@ public class PlotGrid : MonoBehaviour
     public Plot Plot;
 
     public Building[] Buildings = new Building[6];
+
     private Building previewBuilding;
 
     public Square Square;
     private Square previewSquare;
 
     public Road[] Roads = new Road[6];
+
     private Road previewRoad;
 
     public BuildStatus Status { get; set; }
@@ -35,6 +37,7 @@ public class PlotGrid : MonoBehaviour
             Square.PlotGrid = this;
             Square.transform.parent = transform;
             Square.transform.localPosition = new Vector3();
+            Square.IsWorking = true;
         }
     }
 
@@ -50,6 +53,7 @@ public class PlotGrid : MonoBehaviour
         {
             return;
         }
+        b.IsWorking = false;
         this.Status = BuildStatus.Preview;
         this.previewSquare = b;
         this.previewSquare.transform.parent = transform;
@@ -74,6 +78,7 @@ public class PlotGrid : MonoBehaviour
             {
                 return;
             }
+            b.IsWorking = true;
             Roads[i] = b;
             Roads[i].PlotGrid = this;
             Roads[i].transform.parent = transform;
@@ -149,10 +154,12 @@ public class PlotGrid : MonoBehaviour
         {
             return;
         }
+        b.IsWorking = false;
         this.Status = BuildStatus.Preview;
         this.previewRoad = b;
         this.previewRoad.transform.parent = transform;
         this.previewRoad.transform.localPosition = new Vector3();
+        b.IsWorking = false;
     }
 
     public void PlacePreviewRoadPosition(int i)
@@ -178,7 +185,7 @@ public class PlotGrid : MonoBehaviour
             {
                 return;
             }
-
+            b.IsWorking = true;
             Buildings[i] = b;
             Buildings[i].PlotGrid = this;
             Buildings[i].transform.parent = transform;
@@ -212,6 +219,7 @@ public class PlotGrid : MonoBehaviour
         {
             return;
         }
+        b.IsWorking = false;
         this.Status = BuildStatus.Preview;
         this.previewBuilding = b;
         this.previewBuilding.transform.parent = transform;

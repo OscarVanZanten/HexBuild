@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Level;
 using Assets.Scripts.Utils;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -58,8 +59,6 @@ public class Plot : MonoBehaviour
 
     private List<GameObject> resources = new List<GameObject>();
 
-    private ObjectFade[] FadeObject;
-
     private PlotType type = PlotType.Grass;
     public PlotType Type
     {
@@ -74,8 +73,9 @@ public class Plot : MonoBehaviour
 
         }
     }
-
+    
     public HexLocation Location { get; set; }
+    
     private float height;
     public float Height
     {
@@ -89,7 +89,7 @@ public class Plot : MonoBehaviour
             UpdatePlot();
         }
     }
-
+    
     private float temperature;
     public float Temperature
     {
@@ -155,7 +155,6 @@ public class Plot : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        FadeObject = GetComponentsInChildren<ObjectFade>();
     }
 
     public void UpdatePlot()
@@ -229,18 +228,6 @@ public class Plot : MonoBehaviour
         if (ResourcesPosition.gameObject.activeSelf != enable)
         {
             ResourcesPosition.gameObject.SetActive(enable);
-        }
-    }
-
-    public void UpdateFade(float fade)
-    {
-        if (fade == 1 && IsSolid) return;
-        if (fade == 1) IsSolid = true;
-        if (fade < 1) IsSolid = false;
-
-        foreach (ObjectFade objectFade in FadeObject)
-        {
-            objectFade.SetFade(fade);
         }
     }
 

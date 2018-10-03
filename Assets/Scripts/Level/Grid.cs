@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[Serializable]
 public class Grid : MonoBehaviour
 {
     public static Grid Instance { get; private set; }
@@ -28,7 +29,7 @@ public class Grid : MonoBehaviour
     public GameObject plotPrefab;
     public Transform terrain;
     public int radius;
-    public float size;
+    public float size;    
     public float heightAmplifier;
     public float heightOffset;
     public float baseTemperature;
@@ -40,11 +41,9 @@ public class Grid : MonoBehaviour
     public float BeachSize;
     public int MinAmountTrees;
     public int MaxAmountTrees;
+    
     public Dictionary<HexLocation, Plot> plots;
     private int Diameter { get { return radius * 2 + 1; } }
-
-    [Header("Buildings")]
-    public GameObject FisherHouse;
 
     // Use this for initialization
     void Start()
@@ -302,25 +301,6 @@ public class Grid : MonoBehaviour
         }
     }
 
-    private void GenerateFisher()
-    {
-        foreach (Plot plot in plots.Values)
-        {
-            if (plot.Type != PlotType.Grass) continue;
-
-            List<Plot> surrounding = GetSurroundingPlots(plot.Location);
-
-            foreach (Plot surr in surrounding)
-            {
-                if (surr.Type == PlotType.Water)
-                {
-                    GameObject obj = GameObject.Instantiate(FisherHouse);
-                    plot.SetBuilding(obj, 0);
-                    break;
-                }
-            }
-        }
-    }
 
     public Plot GetPlot(int x, int y, int z)
     {

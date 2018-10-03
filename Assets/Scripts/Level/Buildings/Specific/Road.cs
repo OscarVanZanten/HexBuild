@@ -7,9 +7,7 @@ using UnityEngine;
 public class Road : Building
 {
     public GameObject Ramp;
-
     private Square center;
-
     public Square Center
     {
         get

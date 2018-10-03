@@ -5,5 +5,7 @@ using System.Text;
 
 public enum StructureType
 {
-    Road, Building, Square
+    Road,
+    Building,
+    Square
 }
