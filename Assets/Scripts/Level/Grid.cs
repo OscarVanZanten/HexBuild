@@ -28,21 +28,24 @@ public class Grid : MonoBehaviour
     public GameObject SeaPlane;
     public GameObject plotPrefab;
     public Transform terrain;
-    public int radius;
     public float size;    
-    public float heightAmplifier;
+    public float scale;
     public float heightOffset;
+    public int MinAmountTrees;
+    public int MaxAmountTrees;
+
+    [Header("Level Generation settings")]
+    public int radius;
+    public float heightAmplifier;
     public float baseTemperature;
     public float temperatureDegration;
-    public float scale;
     public float TreeLine;
     public float SeaLevel;
     public float BeachLevel;
     public float BeachSize;
-    public int MinAmountTrees;
-    public int MaxAmountTrees;
     
     public Dictionary<HexLocation, Plot> plots;
+
     private int Diameter { get { return radius * 2 + 1; } }
 
     // Use this for initialization
@@ -151,6 +154,40 @@ public class Grid : MonoBehaviour
         Camera.main.transform.position = plotLoc;
         ClearPlots();
     }
+
+    public GridData GetGridData()
+    {
+        List<PlotData> plotData = new List<PlotData>();
+
+        foreach (Plot plot in plots.Values)
+        {
+            plotData.Add(plot.GetPlotData());
+        }
+
+        return new GridData()
+        {
+            Radius = this.radius,
+            HeightAmplifier = this.heightAmplifier,
+            BaseTemperature = this.baseTemperature,
+            TemperatureDegration = this.temperatureDegration,
+            TreeLine = this.TreeLine,
+            SeaLevel = this.SeaLevel,
+            BeachLevel = this.SeaLevel,
+            Plots = plotData
+        };
+    }
+
+    private void Load(GridData data)
+    {
+
+    }
+
+    private void LoadTerrain(GridData data)
+    {
+
+    }
+
+  
 
     private void Generate()
     {
@@ -274,20 +311,6 @@ public class Grid : MonoBehaviour
         }
     }
 
-    //private void GenerateBeaches()
-    //{
-    //    foreach (Plot plot in plots.Values)
-    //    {
-    //        if (plot.Location.X == radius || plot.Location.X == -radius ||
-    //            plot.Location.Z == radius || plot.Location.Z == -radius ||
-    //            plot.Location.Y == radius || plot.Location.Y == -radius)
-    //        {
-    //            plot.Type = PlotType.Water;
-    //          //  plot.Height = SeaLevel;
-    //        }
-    //    }
-    //}
-
     private void GenerateTrees()
     {
         foreach (Plot plot in plots.Values)
@@ -300,7 +323,6 @@ public class Grid : MonoBehaviour
             }
         }
     }
-
 
     public Plot GetPlot(int x, int y, int z)
     {
@@ -329,8 +351,6 @@ public class Grid : MonoBehaviour
         if (found.Count > 3) { ordered.Add(found[3]); }
         return ordered;
     }
-
-   
 
     public List<Plot> GetSurroundingPlots(int x, int y, int z)
     {

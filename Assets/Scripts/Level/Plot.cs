@@ -13,7 +13,6 @@ public class Plot : MonoBehaviour
     [Header("Optimization")]
 
     public GameObject Hexagon;
-    private bool IsSolid { get; set; }
     public PlotGrid PlotGrid;
 
     [Header("Ground Layers")]
@@ -128,6 +127,25 @@ public class Plot : MonoBehaviour
             }
 
         }
+    }
+
+    public PlotData GetPlotData()
+    {
+        return new PlotData()
+        {
+            Type = this.Type,
+            Location = this.Location,
+            Height = this.Height,
+            Temperature = this.Temperature
+        };
+    }
+
+    public void Load(PlotData data)
+    {
+        this.Location = Location;
+        this.Temperature = data.Temperature;
+        this.Height = data.Height;
+        this.Type = data.Type;
     }
 
     public void SetTrees(int amount)

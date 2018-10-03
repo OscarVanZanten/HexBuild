@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.Scripts.Serialization;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,14 +18,14 @@ public class BuildingSelector : MonoBehaviour
     void Update()
     {
 
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            GameDataStorage.Instance.Save(Grid.Instance.GetGridData());
+        }
 
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            SaveIsEasy.SaveIsEasyAPI.SaveAll();
-        }
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-            SaveIsEasy.SaveIsEasyAPI.LoadSceneAndGame();
+            var instance = GameDataStorage.Instance;
         }
 
         if (cameraInteraction.IsBuilding)

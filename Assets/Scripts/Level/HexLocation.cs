@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Assets.Scripts.Level
 {
-    public class HexLocation
+    public struct HexLocation: IEquatable<HexLocation>
     {
         public int X { get; private set; }
         public int Y { get; private set; }
@@ -47,6 +47,11 @@ namespace Assets.Scripts.Level
         public override string ToString()
         {
             return "HexLocation{X: " + X + " Y:" + Y + " Z: " + Z + "}";
+        }
+
+        public bool Equals(HexLocation other)
+        {
+           return this == other;
         }
     }
 }
